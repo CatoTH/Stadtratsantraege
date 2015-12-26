@@ -1,0 +1,7 @@
+vendor
+composer.lock
+web/assets/*
+runtime/*
+config/db.php
+config/params.php
+.idea

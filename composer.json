@@ -1,0 +1,47 @@
+{
+  "name": "catoth/str_antraege",
+  "description": "Antragsgrün",
+  "type": "project",
+  "license": "Proprietary",
+  "support": {
+    "issues": "https://github.com/CatoTH/str_antraege/issues",
+    "source": "https://github.com/CatoTH/str_antraege"
+  },
+  "keywords": [
+    "gruen",
+    "antrag",
+    "netzbegruenung"
+  ],
+  "minimum-stability": "dev",
+  "homepage": "https://www.hoessl.eu.de/",
+  "require": {
+    "php": ">=5.5.0",
+    "fxp/composer-asset-plugin": "~1.0.3",
+    "yiisoft/yii2": "2.0.6",
+    "slm/mail": "*",
+    "tijsverkoyen/css-to-inline-styles": "*",
+    "bower-asset/eonasdan-bootstrap-datetimepicker": "4.17.*",
+    "bower-asset/html5shiv": "*",
+    "bower-asset/es5-shim": "*",
+    "bower-asset/typeahead.js": "*",
+    "bower-asset/jquery": "*"
+  },
+  "require-dev": {
+    "yiisoft/yii2-debug": "2.0.5"
+  },
+  "extra": {
+    "yii\\composer\\Installer::postCreateProject": {
+      "setPermission": [
+        {
+          "runtime": "0775",
+          "web/assets": "0755",
+          "yii": "0755"
+        }
+      ]
+    },
+    "asset-installer-paths": {
+      "npm-asset-library": "vendor/npm",
+      "bower-asset-library": "web/js/bower"
+    }
+  }
+}

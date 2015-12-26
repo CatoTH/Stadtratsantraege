@@ -1,0 +1,103 @@
+$icon-font-path: "/fonts/";
+
+@import "bootstrap";
+@import "../fuelux-3.13.0/dist/css/fuelux.min";
+@import "../bootstrap-tagsinput/bootstrap-tagsinput";
+@import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead";
+@import "../js/bower/bower-asset/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker";
+
+#main-content {
+  width: 100%;
+  padding: 20px;
+}
+
+#antragsliste {
+  width: 100%;
+  table-layout: fixed;
+  border: solid 1px #88D959;
+  border-radius: 5px;
+
+  th, td {
+    text-align: left;
+    padding: 5px;
+  }
+
+  > thead {
+    background-color: #88D959;
+  }
+
+  th.title {
+    width: 30%;
+  }
+
+  th.antragstellerin {
+    width: 14%;
+  }
+
+  th.antragsdatum {
+    width: 200px;
+  }
+
+  th.status {
+    width: 19%;
+  }
+
+  th.aktion {
+    width: 50px;
+  }
+
+  tbody tr:nth-child(even) td {
+    background-color: #E1F6D5;
+  }
+
+  tbody tr.abgelaufen td.titelRow:before {
+    content: '!';
+    font-weight: bold;
+    font-size: 200%;
+    line-height: 20px;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  td.antragsdatum {
+    dd, dt {
+      display: inline-block;
+    }
+    dt {
+      width: 80px;
+    }
+    .datum-label {
+      float: left;
+      line-height: 33px;
+      margin-right: 5px;
+      width: 50px;
+    }
+  }
+
+  td.pillboxHolder {
+    padding-bottom: 0;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  .bootstrap-tagsinput .label {
+    font-size: 100%;
+    font-weight: normal;
+  }
+
+}
+
+.fuelux .pillbox {
+  border: none;
+  padding: 0;
+}
+
+#filterWidget {
+  > .filter {
+    display: inline-block;
+    margin: 10px;
+  }
+}
+
