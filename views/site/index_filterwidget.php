@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 
 ?>
 <button style="float: right;" class="btn btn-default eintrag_add_button" type="button">Neuer Eintrag
@@ -19,9 +20,11 @@
         </button>
         <ul class="dropdown-menu" role="menu">
             <li data-value="0" style="font-style: italic;"><a href="#">Alle Stadträt*innen</a></li>
-            <li data-value="1"><a href="#">Florian Roth</a></li>
-            <li data-value="2"><a href="#">Gülseren Demirel</a></li>
-            <li data-value="0"><a href="#">...</a></li>
+            <?php
+            foreach (\app\models\Stadtraetin::alleFraktionsmitglieder() as $stadtraetin) {
+                echo '<li data-value="' . Html::encode($stadtraetin->id) . '"><a href="#">' .
+                     Html::encode($stadtraetin->name) . '</a></li>';
+            } ?>
         </ul>
         <input class="hidden hidden-field" name="filter_initiator" readonly="readonly" aria-hidden="true"
                type="text"/>
@@ -37,9 +40,9 @@
         </button>
         <ul class="dropdown-menu" role="menu">
             <li data-value="0" style="font-style: italic;"><a href="#">Alle Themen</a></li>
-            <li data-value="1"><a href="#">Verkehr</a></li>
-            <li data-value="2"><a href="#">Stadtplanung</a></li>
-            <li data-value="3"><a href="#">...</a></li>
+            <?php foreach (\app\models\Tag::find()->orderBy('name')->all() as $tag) {
+            echo '<li data-value="' . $tag->id . '"><a href="#">' . Html::encode($tag->name) . '</a></li>';
+            } ?>
         </ul>
         <input class="hidden hidden-field" name="filter_thema" readonly="readonly" aria-hidden="true"
                type="text"/>

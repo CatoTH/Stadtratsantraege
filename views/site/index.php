@@ -41,7 +41,12 @@ echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
         $link           = 'https://www.muenchen-transparent.de/' . $antrag->ris_id; // @TODO
         foreach ($antrag->stadtraetinnen as $stadtraetin) {
             $row_classes[]    = 'stadtraetin_' . $stadtraetin->id;
-            $stadtraetinnen[] = $stadtraetin->name;
+            if ($stadtraetin->fraktionsmitglied) {
+                $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));
+                $stadtraetinnen[] = Html::encode($namen[0]);
+            } else {
+                $stadtraetinnen[] = '<span class="nicht-fraktion">' . Html::encode($stadtraetin->name) . '</span>';
+            }
         }
         foreach ($antrag->tags as $tag) {
             $tags[]        = $tag->name;
@@ -60,7 +65,7 @@ echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
             <td class="titelRow">
                 <a href="<?= Html::encode($link) ?>" target="_blank"><?= Html::encode($antrag->titel) ?></a>
             </td>
-            <td><?= Html::encode(implode(', ', $stadtraetinnen)) ?></td>
+            <td><?= implode(', ', $stadtraetinnen) ?></td>
             <td class="antragsdatum">
                 <dl>
                     <dt>Antrag:</dt>

@@ -50,11 +50,13 @@ jQuery(function () {
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
 
+        console.log(initiator);
+
         $("#antragsliste").find("tbody tr").each(function () {
             var $tr = $(this),
                 matchAll = true;
             if ($tr.hasClass("adder-row")) return;
-            if (initiator > 0 && !$tr.hasClass("initiator_" + initiator)) matchAll = false;
+            if (initiator > 0 && !$tr.hasClass("stadtraetin_" + initiator)) matchAll = false;
             if (thema > 0 && !$tr.hasClass("thema_" + thema)) matchAll = false;
             if (status > 0 && !$tr.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$tr.hasClass("abgelaufen")) matchAll = false;

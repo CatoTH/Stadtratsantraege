@@ -47,11 +47,25 @@ class ImportController extends Controller
                 }
             }
             $antrag->titel              = $antragData['betreff'];
+            $antrag->typ                = $antragData['typ'];
+            $antrag->antrags_nr         = $antragData['antrags_nr'];
             $antrag->gestellt_am        = $antragData['gestellt_am'];
             $antrag->bearbeitungsfrist  = $antragData['bearbeitungsfrist'];
             $antrag->fristverlaengerung = $antragData['fristverlaengerung'];
             $antrag->status             = $antragData['status'];
+            $antrag->notiz              = '';
             $antrag->save();
+
+            foreach ($antragData['stadtraetInnen'] as $stadtraetInData) {
+                $stadtraetin = Stadtraetin::findOne(['ris_id' => $stadtraetInData['id']]);
+                if ( ! $stadtraetin) {
+                    $stadtraetin         = new Stadtraetin();
+                    $stadtraetin->ris_id = $stadtraetInData['id'];
+                    $stadtraetin->name   = $stadtraetInData['name'];
+                    $stadtraetin->save();
+                }
+                $antrag->link('stadtraetinnen', $stadtraetin);
+            }
         }
     }
 

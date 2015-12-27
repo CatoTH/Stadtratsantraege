@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * @property int|null $ris_id
  * @property string $antrags_nr
  * @property string $titel
+ * @property string $typ
  * @property string $gestellt_am
  * @property string $bearbeitungsfrist
  * @property string|null $fristverlaengerung

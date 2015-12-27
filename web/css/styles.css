@@ -8938,6 +8938,8 @@ label.fuelux .radio:hover:before, label.fuelux .checkbox:hover:before, label.fue
     line-height: 33px;
     margin-right: 5px;
     width: 50px; }
+  #antragsliste .nicht-fraktion {
+    color: gray; }
   #antragsliste td.pillboxHolder {
     padding-bottom: 0; }
   #antragsliste textarea {
