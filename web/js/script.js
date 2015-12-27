@@ -1,5 +1,4 @@
 jQuery(function () {
-    $('.pillbox').pillbox();
     $('.selectlist').selectlist();
     $('.checkbox').checkbox();
 
@@ -50,8 +49,6 @@ jQuery(function () {
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
 
-        console.log(initiator);
-
         $("#antragsliste").find("tbody tr").each(function () {
             var $tr = $(this),
                 matchAll = true;
@@ -82,7 +79,7 @@ jQuery(function () {
         $('.adder-row').removeClass('hidden');
         $('.adder-row').find("input").first().focus();
     });
-    $('.adder-row .aktion button').click(function() {
+    $('.adder-row .aktion button').click(function () {
         var $adderRow = $('.adder-row'),
             data = {},
             params = {};
@@ -91,9 +88,52 @@ jQuery(function () {
         params['antrag'] = data;
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
         console.log(params);
-        $.post($adderRow.data("target"), params, function(ret) {
+        $.post($adderRow.data("target"), params, function (ret) {
             console.log("Return", ret);
         });
     });
 
+
+    $('#antragsliste').on('click', '.save-button', function () {
+        var $row = $(this).parents("tr").first(),
+            data = {},
+            params = {};
+
+        data['tags'] = $row.find(".entertags").val();
+        data['notiz'] = $row.find("textarea[name=notiz]").val();
+
+        params['antrag'] = data;
+        params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
+
+        $.post($row.data("target"), params, function (ret) {
+            if (ret['error'] !== undefined) {
+                alert(ret['error']);
+                return;
+            }
+            var $newRow = $(ret['content']);
+            $row.replaceWith($newRow);
+
+            $newRow.find('.selectlist').selectlist();
+            $newRow.find('.checkbox').checkbox();
+            $newRow.find('.antrag_datum').datetimepicker({
+                locale: 'de',
+                format: 'L'
+            });
+            $newRow.find('.entertags').tagsinput({
+                typeaheadjs: {
+                    name: 'tagnames',
+                    displayKey: 'name',
+                    valueKey: 'name',
+                    source: tagnames.ttAdapter()
+                }
+            });
+
+            $newRow.find(".aktion button").addClass("hidden");
+            $newRow.find(".aktion .saved").removeClass("hidden");
+            window.setTimeout(function () {
+                $newRow.find(".aktion button").removeClass("hidden");
+                $newRow.find(".aktion .saved").addClass("hidden");
+            }, 1000);
+        });
+    })
 });

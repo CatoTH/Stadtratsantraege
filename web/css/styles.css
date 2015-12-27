@@ -8907,7 +8907,8 @@ label.fuelux .radio:hover:before, label.fuelux .checkbox:hover:before, label.fue
   border-radius: 5px; }
   #antragsliste th, #antragsliste td {
     text-align: left;
-    padding: 5px; }
+    padding: 5px;
+    vertical-align: top; }
   #antragsliste > thead {
     background-color: #88D959; }
   #antragsliste th.title {
@@ -8928,29 +8929,35 @@ label.fuelux .radio:hover:before, label.fuelux .checkbox:hover:before, label.fue
     font-size: 200%;
     line-height: 20px;
     vertical-align: middle;
-    margin-right: 10px; }
+    margin-right: 10px;
+    float: left;
+    margin-top: 25px; }
+  #antragsliste td.titelRow .typ {
+    color: gray; }
+  #antragsliste td.titelRow a {
+    font-weight: bold; }
   #antragsliste td.antragsdatum dd, #antragsliste td.antragsdatum dt {
     display: inline-block; }
   #antragsliste td.antragsdatum dt {
-    width: 80px; }
+    width: 60px;
+    font-weight: normal; }
   #antragsliste td.antragsdatum .datum-label {
     float: left;
     line-height: 33px;
     margin-right: 5px;
     width: 50px; }
+  #antragsliste td.aktion .saved {
+    font-size: 10px;
+    text-align: center; }
   #antragsliste .nicht-fraktion {
     color: gray; }
-  #antragsliste td.pillboxHolder {
+  #antragsliste td.tags {
     padding-bottom: 0; }
   #antragsliste textarea {
     width: 100%; }
   #antragsliste .bootstrap-tagsinput .label {
     font-size: 100%;
     font-weight: normal; }
-
-.fuelux .pillbox {
-  border: none;
-  padding: 0; }
 
 #filterWidget > .filter {
   display: inline-block;

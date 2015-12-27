@@ -1,6 +1,7 @@
 <?php
 use app\models\Antrag;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * @var \yii\web\View $this
@@ -35,64 +36,7 @@ echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
     <?php
     echo $this->render('index_adder_row', ['stadtraetinnen' => $stadtraetinnen_alle]);
     foreach ($antraege as $antrag) {
-        $row_classes    = [];
-        $stadtraetinnen = [];
-        $tags           = [];
-        $link           = 'https://www.muenchen-transparent.de/' . $antrag->ris_id; // @TODO
-        foreach ($antrag->stadtraetinnen as $stadtraetin) {
-            $row_classes[]    = 'stadtraetin_' . $stadtraetin->id;
-            if ($stadtraetin->fraktionsmitglied) {
-                $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));
-                $stadtraetinnen[] = Html::encode($namen[0]);
-            } else {
-                $stadtraetinnen[] = '<span class="nicht-fraktion">' . Html::encode($stadtraetin->name) . '</span>';
-            }
-        }
-        foreach ($antrag->tags as $tag) {
-            $tags[]        = $tag->name;
-            $row_classes[] = 'tag_' . $tag->id;
-        }
-        $frist      = ($antrag->fristverlaengerung ? $antrag->fristverlaengerung : $antrag->bearbeitungsfrist);
-        $abgelaufen = (date('Ymd') <= str_replace('-', '', $frist));
-        if ($abgelaufen) {
-            $row_classes[] = 'abgelaufen';
-        }
-        if ($antrag->fristverlaengerung) {
-            $row_classes[] = 'verlaengert';
-        }
-        ?>
-        <tr class="<?= implode(' ', $row_classes) ?>" data-antrag-id="<?= $antrag->id ?>">
-            <td class="titelRow">
-                <a href="<?= Html::encode($link) ?>" target="_blank"><?= Html::encode($antrag->titel) ?></a>
-            </td>
-            <td><?= implode(', ', $stadtraetinnen) ?></td>
-            <td class="antragsdatum">
-                <dl>
-                    <dt>Antrag:</dt>
-                    <dd><?= Antrag::formatDate($antrag->gestellt_am) ?></dd>
-                    <br>
-                    <dt>Frist:</dt>
-                    <dd><?= Antrag::formatDate($antrag->bearbeitungsfrist) ?></dd>
-                    <br>
-                    <?php if ($antrag->fristverlaengerung) { ?>
-                        <dt class="verlaengert">Verlängert:</dt>
-                        <dd><?= Antrag::formatDate($antrag->fristverlaengerung) ?></dd>
-                    <?php } ?>
-                </dl>
-            </td>
-            <td>
-                <?= Html::encode($antrag->status) ?>
-                <br><textarea placeholder="Notiz, aktueller Stand"><?= Html::encode($antrag->notiz) ?></textarea>
-            </td>
-            <td class="pillboxHolder">
-                <input type="text" value="<?= Html::encode(implode(',', $tags)) ?>" class="entertags" title="Themen">
-            </td>
-            <td>
-                <button class="btn btn-default btn-sm" type="button"><span class="glyphicon glyphicon-ok"></span>
-                </button>
-            </td>
-        </tr>
-        <?php
+        echo $this->render('index_antrag_row', ['antrag' => $antrag]);
     }
     ?>
 
