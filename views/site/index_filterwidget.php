@@ -41,7 +41,7 @@ use yii\helpers\Html;
         <ul class="dropdown-menu" role="menu">
             <li data-value="0" style="font-style: italic;"><a href="#">Alle Themen</a></li>
             <?php foreach (\app\models\Tag::find()->orderBy('name')->all() as $tag) {
-            echo '<li data-value="' . $tag->id . '"><a href="#">' . Html::encode($tag->name) . '</a></li>';
+                echo '<li data-value="' . $tag->id . '"><a href="#">' . Html::encode($tag->name) . '</a></li>';
             } ?>
         </ul>
         <input class="hidden hidden-field" name="filter_thema" readonly="readonly" aria-hidden="true"
@@ -58,9 +58,9 @@ use yii\helpers\Html;
         </button>
         <ul class="dropdown-menu" role="menu">
             <li data-value="0" style="font-style: italic;"><a href="#">Alle Stati</a></li>
-            <li data-value="1"><a href="#">Abgeschlossen</a></li>
-            <li data-value="2"><a href="#">In Bearbeitung</a></li>
-            <li data-value="3"><a href="#">Aufgegriffen</a></li>
+            <?php foreach (\app\models\Antrag::$STATI as $id => $name) {
+                echo '<li data-value="' . $id . '"><a href="#">' . Html::encode($name) . '</a></li>';
+            } ?>
         </ul>
         <input class="hidden hidden-field" name="filter_status" readonly="readonly" aria-hidden="true"
                type="text"/>

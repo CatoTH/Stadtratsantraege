@@ -83,7 +83,24 @@ jQuery(function () {
         var $adderRow = $('.adder-row'),
             data = {},
             params = {};
+
         data['titel'] = $adderRow.find("input[name=titel]").val();
+        data['tags'] = $adderRow.find(".entertags").val();
+        data['notiz'] = $adderRow.find("textarea[name=notiz]").val();
+        data['typ'] = $adderRow.find("input[name=typ]").val();
+        data['status'] = $adderRow.find("textarea[name=status]").val();
+        data['stadtraetinnen'] = [];
+        $adderRow.find(".antragstellerin :checked").each(function() {
+            data['stadtraetinnen'].push($(this).val());
+        });
+        var erstellt_am = $adderRow.find("input[name=erstellt_am]").val().split(".");
+        if (erstellt_am.length == 3) {
+            data['gestellt_am'] = erstellt_am[2] + '-' + erstellt_am[1] + '-' + erstellt_am[0];
+        }
+        var frist = $adderRow.find("input[name=bearbeitungsfrist]").val().split(".");
+        if (frist.length == 3) {
+            data['bearbeitungsfrist'] = frist[2] + '-' + frist[1] + '-' + frist[0];
+        }
 
         params['antrag'] = data;
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");

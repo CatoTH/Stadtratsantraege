@@ -23,6 +23,20 @@ use yii\db\ActiveRecord;
  */
 class Antrag extends ActiveRecord
 {
+    public static $STATI = [
+        0 => 'erledigt',
+        1 => 'In Bearbeitung',
+        2 => 'registriert',
+        3 => 'zugeleitet',
+    ];
+
+    public static $TYPEN = [
+        0 => 'Antrag',
+        1 => 'Anfrage',
+        2 => 'Ergaenzungsantrag',
+        3 => 'Aenderungsantrag',
+    ];
+
     /**
      * @return string
      */
@@ -47,6 +61,20 @@ class Antrag extends ActiveRecord
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
                     ->viaTable('antraege_tags', ['antrag_id' => 'id']);
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatusId()
+    {
+        foreach (static::$STATI as $id => $name) {
+            if (mb_strtolower($this->status) == mb_strtolower($name)) {
+                return $id;
+            }
+        }
+
+        return 0;
     }
 
     /**

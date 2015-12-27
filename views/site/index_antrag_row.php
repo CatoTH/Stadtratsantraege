@@ -9,7 +9,7 @@ use yii\helpers\Url;
 $row_classes    = [];
 $stadtraetinnen = [];
 $tags           = [];
-$link           = 'https://www.muenchen-transparent.de/' . $antrag->ris_id; // @TODO
+$link           = 'https://www.muenchen-transparent.de/antraege/' . $antrag->ris_id;
 foreach ($antrag->stadtraetinnen as $stadtraetin) {
     $row_classes[] = 'stadtraetin_' . $stadtraetin->id;
     if ($stadtraetin->fraktionsmitglied) {
