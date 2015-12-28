@@ -32,6 +32,7 @@ if ($antrag->fristverlaengerung) {
     $row_classes[] = 'verlaengert';
 }
 $target = Url::toRoute(['site/saveantrag', 'antrag_id' => $antrag->id]);
+$del_target = Url::toRoute(['site/delantrag']);
 ?>
 <tr class="<?= implode(' ', $row_classes) ?>"
     data-antrag-id="<?= $antrag->id ?>" data-target="<?= Html::encode($target) ?>">
@@ -75,5 +76,10 @@ $target = Url::toRoute(['site/saveantrag', 'antrag_id' => $antrag->id]);
             <span class="glyphicon glyphicon-ok-sign" style="font-size: 1.5em;"></span>
             Gespei&shy;chert
         </div>
+        <?php if ($antrag->ris_id === null) { ?>
+        <button class="btn btn-xs del-button" type="button" data-target="<?=Html::encode($del_target)?>">
+            <span class="glyphicon glyphicon-trash"></span>
+        </button>
+        <?php } ?>
     </td>
 </tr>

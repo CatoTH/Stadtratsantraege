@@ -88,14 +88,14 @@ jQuery(function () {
         data['tags'] = $adderRow.find(".entertags").val();
         data['notiz'] = $adderRow.find("textarea[name=notiz]").val();
         data['typ'] = $adderRow.find("input[name=typ]").val();
-        data['status'] = $adderRow.find("textarea[name=status]").val();
+        data['status'] = $adderRow.find("input[name=status]").val();
         data['stadtraetinnen'] = [];
-        $adderRow.find(".antragstellerin :checked").each(function() {
+        $adderRow.find(".antragstellerin :checked").each(function () {
             data['stadtraetinnen'].push($(this).val());
         });
-        var erstellt_am = $adderRow.find("input[name=erstellt_am]").val().split(".");
-        if (erstellt_am.length == 3) {
-            data['gestellt_am'] = erstellt_am[2] + '-' + erstellt_am[1] + '-' + erstellt_am[0];
+        var gestellt_am = $adderRow.find("input[name=gestellt_am]").val().split(".");
+        if (gestellt_am.length == 3) {
+            data['gestellt_am'] = gestellt_am[2] + '-' + gestellt_am[1] + '-' + gestellt_am[0];
         }
         var frist = $adderRow.find("input[name=bearbeitungsfrist]").val().split(".");
         if (frist.length == 3) {
@@ -104,9 +104,14 @@ jQuery(function () {
 
         params['antrag'] = data;
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
-        console.log(params);
         $.post($adderRow.data("target"), params, function (ret) {
-            console.log("Return", ret);
+            $adderRow.after(ret['content']);
+            $adderRow.hide();
+
+            $adderRow.find("input[name=titel]").val("");
+            $adderRow.find(".entertags").val("");
+            $adderRow.find("textarea[name=notiz]").val("");
+            $adderRow.find("input[name=status]").val("");
         });
     });
 
@@ -152,5 +157,23 @@ jQuery(function () {
                 $newRow.find(".aktion .saved").addClass("hidden");
             }, 1000);
         });
-    })
+    });
+
+    $('#antragsliste').on('click', '.del-button', function () {
+        if (!window.confirm("Diesen Antrag wirklich löschen?")) {
+            return;
+        }
+        var $row = $(this).parents("tr").first(),
+            params = {};
+        params['antrag_id'] = $row.data("antrag-id");
+        params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
+        $.post($(this).data("target"), params, function (ret) {
+            if (ret['success']) {
+                $row.remove();
+                console.log("success");
+            } else {
+                alert(ret['error']);
+            }
+        });
+    });
 });

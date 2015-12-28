@@ -8946,9 +8946,16 @@ label.fuelux .radio:hover:before, label.fuelux .checkbox:hover:before, label.fue
     line-height: 33px;
     margin-right: 5px;
     width: 50px; }
-  #antragsliste td.aktion .saved {
-    font-size: 10px;
+  #antragsliste td.aktion {
     text-align: center; }
+    #antragsliste td.aktion .saved {
+      font-size: 10px; }
+    #antragsliste td.aktion .del-button {
+      margin-top: 10px;
+      color: red;
+      display: none; }
+    #antragsliste td.aktion:hover .del-button {
+      display: inherit; }
   #antragsliste .nicht-fraktion {
     color: gray; }
   #antragsliste td.tags {

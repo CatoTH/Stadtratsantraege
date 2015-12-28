@@ -88,9 +88,19 @@ $icon-font-path: "/fonts/";
   }
 
   td.aktion {
+    text-align: center;
     .saved {
       font-size: 10px;
-      text-align: center;
+    }
+    .del-button {
+      margin-top: 10px;
+      color: red;
+      display: none;
+    }
+    &:hover {
+      .del-button {
+        display: inherit;
+      }
     }
   }
 

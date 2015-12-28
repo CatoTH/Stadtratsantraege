@@ -37,7 +37,7 @@ use yii\helpers\Url;
         <div class="datum-label">Antrag:</div>
         <div class="form-group" style="float: left; width: 135px;">
             <div class='input-group date antrag_datum'>
-                <input type='text' class="form-control" title="Antragsdatum" name="erstellt_am">
+                <input type='text' class="form-control" title="Antragsdatum" name="gestellt_am">
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
