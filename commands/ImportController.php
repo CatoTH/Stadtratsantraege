@@ -10,6 +10,8 @@ use yii\console\Controller;
 class ImportController extends Controller
 {
 
+    public $defaultAction = 'import-from-file';
+
     /**
      * Daten aus einer JSON-Datei importieren
      *
@@ -67,34 +69,5 @@ class ImportController extends Controller
                 $antrag->link('stadtraetinnen', $stadtraetin);
             }
         }
-    }
-
-    /**
-     * Test
-     */
-    public function actionTest()
-    {
-        $antrag                     = new Antrag();
-        $antrag->ris_id             = null;
-        $antrag->titel              = 'Test';
-        $antrag->bearbeitungsfrist  = date('Y-m-d');
-        $antrag->fristverlaengerung = date('Y-m-d');
-        $antrag->benachrichtigung   = date('Y-m-d');
-        $antrag->gestellt_am        = date('Y-m-d');
-        $antrag->status             = 'Gestellt';
-        $antrag->notiz              = 'Bla';
-        $antrag->save();
-
-        $tag            = new Tag();
-        $tag->tag       = 'Test';
-        $tag->antrag_id = $antrag->id;
-        $tag->save();
-
-        $stadtraetin         = new Stadtraetin();
-        $stadtraetin->name   = 'Sabine Nallinger';
-        $stadtraetin->ris_id = 1418551;
-        $stadtraetin->save();
-
-        $antrag->link('stadtraetinnen', $stadtraetin);
     }
 }

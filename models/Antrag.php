@@ -13,10 +13,11 @@ use yii\db\ActiveRecord;
  * @property string $typ
  * @property string $gestellt_am
  * @property string $bearbeitungsfrist
+ * @property string|null $bearbeitungsfrist_benachrichtigung
  * @property string|null $fristverlaengerung
+ * @property string|null $fristverlaengerung_benachrichtigung
  * @property string $status
  * @property string $notiz
- * @property string|null $benachrichtigung
  *
  * @property Tag[] $tags
  * @property Stadtraetin[] $stadtraetinnen
