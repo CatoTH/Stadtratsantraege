@@ -29,6 +29,8 @@ class Antrag extends ActiveRecord
         1 => 'In Bearbeitung',
         2 => 'registriert',
         3 => 'zugeleitet',
+        4 => 'aufgegriffen',
+        5 => 'Sitzungsvorlage',
     ];
 
     public static $TYPEN = [

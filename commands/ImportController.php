@@ -16,6 +16,9 @@ class ImportController extends Controller
      */
     private function importDatarow($antragData)
     {
+        if ($antragData['status'] == 'Sitzungsvorlage') {
+            return;
+        }
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne(['ris_id' => $antragData['id']]);
         if ( ! $antrag) {

@@ -21,17 +21,18 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `antraege` (
-  `id`                 INT(11)      NOT NULL,
-  `ris_id`             INT(11) DEFAULT NULL,
-  `titel`              VARCHAR(200) NOT NULL,
-  `typ`                VARCHAR(50)  NOT NULL,
-  `antrags_nr`         VARCHAR(50)  NOT NULL,
-  `gestellt_am`        DATE         NOT NULL,
-  `bearbeitungsfrist`  DATE         NOT NULL,
-  `fristverlaengerung` DATE    DEFAULT NULL,
-  `status`             VARCHAR(150) NOT NULL,
-  `notiz`              TEXT         NOT NULL,
-  `benachrichtigung`   DATE    DEFAULT NULL
+  `id`                                  INT(11)      NOT NULL,
+  `ris_id`                              INT(11) DEFAULT NULL,
+  `titel`                               VARCHAR(200) NOT NULL,
+  `typ`                                 VARCHAR(50)  NOT NULL,
+  `antrags_nr`                          VARCHAR(50)  NOT NULL,
+  `gestellt_am`                         DATE         NOT NULL,
+  `bearbeitungsfrist`                   DATE         NOT NULL,
+  `bearbeitungsfrist_benachrichtigung`  DATE    DEFAULT NULL,
+  `fristverlaengerung`                  DATE    DEFAULT NULL,
+  `fristverlaengerung_benachrichtigung` DATE    DEFAULT NULL,
+  `status`                              VARCHAR(150) NOT NULL,
+  `notiz`                               TEXT         NOT NULL
 )
   ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
