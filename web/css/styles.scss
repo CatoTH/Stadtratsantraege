@@ -47,6 +47,19 @@ $icon-font-path: "/fonts/";
     width: 50px;
   }
 
+  .sort_link {
+    display: block;
+
+    .sort_hidden {
+      visibility: hidden;
+    }
+    &:hover {
+      .sort_hidden {
+        visibility: visible;
+      }
+    }
+  }
+
   tbody tr:nth-child(even) td {
     background-color: #E1F6D5;
   }

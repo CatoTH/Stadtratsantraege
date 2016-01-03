@@ -15,7 +15,7 @@
   "minimum-stability": "dev",
   "homepage": "https://www.hoessl.eu.de/",
   "require": {
-    "php": ">=5.5.0",
+    "php": ">=7.0.0",
     "fxp/composer-asset-plugin": "~1.0.3",
     "yiisoft/yii2": "2.0.6",
     "slm/mail": "*",

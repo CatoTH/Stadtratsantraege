@@ -24,6 +24,10 @@ use yii\db\ActiveRecord;
  */
 class Antrag extends ActiveRecord
 {
+    const SORT_DATUM = 0;
+    const SORT_TITEL = 1;
+    const SORT_STATUS = 2;
+
     public static $STATI = [
         0 => 'erledigt',
         1 => 'In Bearbeitung',

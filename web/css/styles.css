@@ -8921,6 +8921,12 @@ label.fuelux .radio:hover:before, label.fuelux .checkbox:hover:before, label.fue
     width: 19%; }
   #antragsliste th.aktion {
     width: 50px; }
+  #antragsliste .sort_link {
+    display: block; }
+    #antragsliste .sort_link .sort_hidden {
+      visibility: hidden; }
+    #antragsliste .sort_link:hover .sort_hidden {
+      visibility: visible; }
   #antragsliste tbody tr:nth-child(even) td {
     background-color: #E1F6D5; }
   #antragsliste tbody tr.abgelaufen td.titelRow:before {

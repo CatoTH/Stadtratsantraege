@@ -12,15 +12,46 @@ class SiteController extends Controller
     public $layout = '@app/views/layouts/main';
 
     /**
+     * @param int $sort
+     * @param int $sort_desc
+     *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($sort = Antrag::SORT_DATUM, $sort_desc = 1)
     {
-        $sql      = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist ' .
-                    'FROM antraege ORDER BY frist DESC';
-        $antraege = Antrag::findBySql($sql)->all();
+        if ($sort == Antrag::SORT_DATUM) {
+            $sql = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist ' .
+                   'FROM antraege ORDER BY frist';
+            if ($sort_desc) {
+                $sql .= ' DESC';
+            }
+            $antraege = Antrag::findBySql($sql)->all();
+        } elseif ($sort == Antrag::SORT_TITEL) {
+            $sql = 'SELECT * FROM antraege ORDER BY titel';
+            if ($sort_desc) {
+                $sql .= ' DESC';
+            }
+            $antraege = Antrag::findBySql($sql)->all();
+        } elseif ($sort == Antrag::SORT_STATUS) {
+            $antraege = Antrag::findBySql('SELECT * FROM antraege')->all();
+            usort($antraege, function (Antrag $antrag1, Antrag $antrag2) use ($sort_desc) {
+                $status1 = $antrag1->getStatusId();
+                $status2 = $antrag2->getStatusId();
+                if ($sort_desc) {
+                    return $status2 <=> $status1;
+                } else {
+                    return $status1 <=> $status2;
+                }
+            });
+        } else {
+            return 'Unbekannter Sortierungstyp';
+        }
 
-        return $this->render('index', ['antraege' => $antraege]);
+        return $this->render('index', [
+            'antraege'  => $antraege,
+            'sort'      => $sort,
+            'sort_desc' => $sort_desc,
+        ]);
     }
 
     /**
