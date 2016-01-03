@@ -53,6 +53,25 @@ CREATE TABLE `antraege_stadtraetinnen` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `email`
+--
+
+CREATE TABLE IF NOT EXISTS `email` (
+  `id`        INT(11)      NOT NULL,
+  `toEmail`   VARCHAR(200)      DEFAULT NULL,
+  `dateSent`  TIMESTAMP    NULL DEFAULT NULL,
+  `subject`   VARCHAR(200)      DEFAULT NULL,
+  `text`      MEDIUMTEXT,
+  `messageId` VARCHAR(100) NOT NULL,
+  `status`    SMALLINT(6)  NOT NULL,
+  `error`     TEXT
+)
+  ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `antraege_tags`
 --
 
@@ -131,6 +150,12 @@ ADD PRIMARY KEY (`id`),
 ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indexes for table `emailLog`
+--
+ALTER TABLE `email`
+ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -149,6 +174,12 @@ MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 4;
 --
 ALTER TABLE `tags`
 MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `emailLog`
+--
+ALTER TABLE `email`
+MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- Constraints for dumped tables
 --

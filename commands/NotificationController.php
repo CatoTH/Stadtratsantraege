@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\components\mail\Mandrill;
 use app\models\Antrag;
 use app\models\Stadtraetin;
 use app\models\Tag;
@@ -68,7 +69,11 @@ class NotificationController extends Controller
         $mail = "Hallo,\n\n" . $abgelaufenStr . $verlaengertStr;
         $mail .= "\n\nMit freundlichen Grüßen,\n  Der nette grüne Stadtrats-Roboter";
 
+        foreach (\Yii::$app->params['mailTo'] as $mailTo) {
+            Mandrill::sendWithLog($mailTo, 'Verspätungsalarm: Stadtrats-Anträge', $mail);
+        }
         echo $mail; // @TODO
+
 
         foreach ($abgelaufen as $antrag) {
             $antrag->bearbeitungsfrist_benachrichtigung = date('Y-m-d H:i:s');
