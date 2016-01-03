@@ -81,6 +81,20 @@ class Antrag extends ActiveRecord
     }
 
     /**
+     * @return int
+     */
+    public function getTypId()
+    {
+        foreach (static::$TYPEN as $id => $name) {
+            if (mb_strtolower($this->typ) == mb_strtolower($name)) {
+                return $id;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
      * @param string $date
      *
      * @return string

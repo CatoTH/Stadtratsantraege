@@ -45,6 +45,7 @@ jQuery(function () {
     var rebuildList = function () {
         var initiator = $("input[name=filter_initiator]").val(),
             status = $("input[name=filter_status]").val(),
+            typ = $("input[name=filter_typ]").val(),
             thema = $("input[name=filter_thema]").val(),
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
@@ -53,10 +54,11 @@ jQuery(function () {
             var $tr = $(this),
                 matchAll = true;
             if ($tr.hasClass("adder-row")) return;
-            if (initiator > 0 && !$tr.hasClass("stadtraetin_" + initiator)) matchAll = false;
-            if (thema > 0 && !$tr.hasClass("thema_" + thema)) matchAll = false;
-            if (status > 0 && !$tr.hasClass("status_" + status)) matchAll = false;
+            if (initiator >= 0 && !$tr.hasClass("stadtraetin_" + initiator)) matchAll = false;
+            if (thema >= 0 && !$tr.hasClass("thema_" + thema)) matchAll = false;
+            if (status >= 0 && !$tr.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$tr.hasClass("abgelaufen")) matchAll = false;
+            if (typ >= 0 && !$tr.hasClass("typ_" + typ)) matchAll = false;
             if (titel != '' && $tr.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) == -1) matchAll = false;
 
             if (matchAll) {
@@ -70,6 +72,7 @@ jQuery(function () {
 
     $(".filter_initiator").on("changed.fu.selectlist", rebuildList);
     $(".filter_thema").on("changed.fu.selectlist", rebuildList);
+    $(".filter_typ").on("changed.fu.selectlist", rebuildList);
     $(".filter_status").on("changed.fu.selectlist", rebuildList);
     $(".filter_abgelaufen").on("changed.fu.checkbox", rebuildList);
     $("#filter_titel").on("keyup change", rebuildList);

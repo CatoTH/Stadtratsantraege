@@ -23,15 +23,16 @@ foreach ($antrag->tags as $tag) {
     $tags[]        = $tag->name;
     $row_classes[] = 'tag_' . $tag->id;
 }
-$frist      = ($antrag->fristverlaengerung ? $antrag->fristverlaengerung : $antrag->bearbeitungsfrist);
-$abgelaufen = (date('Ymd') <= str_replace('-', '', $frist));
+$row_classes[] = 'typ_' . $antrag->getTypId();
+$frist         = ($antrag->fristverlaengerung ? $antrag->fristverlaengerung : $antrag->bearbeitungsfrist);
+$abgelaufen    = (date('Ymd') >= str_replace('-', '', $frist));
 if ($abgelaufen) {
     $row_classes[] = 'abgelaufen';
 }
 if ($antrag->fristverlaengerung) {
     $row_classes[] = 'verlaengert';
 }
-$target = Url::toRoute(['site/saveantrag', 'antrag_id' => $antrag->id]);
+$target     = Url::toRoute(['site/saveantrag', 'antrag_id' => $antrag->id]);
 $del_target = Url::toRoute(['site/delantrag']);
 ?>
 <tr class="<?= implode(' ', $row_classes) ?>"
@@ -77,9 +78,9 @@ $del_target = Url::toRoute(['site/delantrag']);
             Gespei&shy;chert
         </div>
         <?php if ($antrag->ris_id === null) { ?>
-        <button class="btn btn-xs del-button" type="button" data-target="<?=Html::encode($del_target)?>">
-            <span class="glyphicon glyphicon-trash"></span>
-        </button>
+            <button class="btn btn-xs del-button" type="button" data-target="<?= Html::encode($del_target) ?>">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
         <?php } ?>
     </td>
 </tr>
