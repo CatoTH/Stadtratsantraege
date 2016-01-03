@@ -150,7 +150,7 @@ ADD PRIMARY KEY (`id`),
 ADD UNIQUE KEY `name` (`name`);
 
 --
--- Indexes for table `emailLog`
+-- Indexes for table `email`
 --
 ALTER TABLE `email`
 ADD PRIMARY KEY (`id`);

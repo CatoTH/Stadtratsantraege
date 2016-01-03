@@ -2,10 +2,8 @@
 
 namespace app\commands;
 
-use app\components\mail\Mandrill;
+use app\components\Mandrill;
 use app\models\Antrag;
-use app\models\Stadtraetin;
-use app\models\Tag;
 use yii\console\Controller;
 
 class NotificationController extends Controller
@@ -39,6 +37,7 @@ class NotificationController extends Controller
             $abgelaufenStr .= "- " . str_replace("\n", "", $antrag->titel) . "\n";
             $abgelaufenStr .= "  https://www.muenchen-transparent.de/antraege/" . $antrag->ris_id . "\n";
             $abgelaufenStr .= "  Status: " . $antrag->status . "\n";
+            $abgelaufenStr .= "  Gestellt am: " . $antrag->gestellt_am . "\n";
             $abgelaufenStr .= "  Ursprüngliche Frist: " . $antrag->bearbeitungsfrist . "\n";
             if ($antrag->fristverlaengerung) {
                 $abgelaufenStr .= "  Fristverlängerung: " . $antrag->fristverlaengerung . "\n";
@@ -58,6 +57,7 @@ class NotificationController extends Controller
             $verlaengertStr .= "- " . str_replace("\n", "", $antrag->titel) . "\n";
             $verlaengertStr .= "  https://www.muenchen-transparent.de/antraege/" . $antrag->ris_id . "\n";
             $verlaengertStr .= "  Status: " . $antrag->status . "\n";
+            $verlaengertStr .= "  Gestellt am: " . $antrag->gestellt_am . "\n";
             $verlaengertStr .= "  Ursprüngliche Frist: " . $antrag->bearbeitungsfrist . "\n";
             $verlaengertStr .= "  Neue (verlängerte) Frist: " . $antrag->fristverlaengerung . "\n\n";
         }

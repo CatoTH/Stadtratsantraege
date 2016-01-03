@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components\mail;
+namespace app\components;
 
 use app\models\Email;
 use yii\helpers\Html;
@@ -20,7 +20,7 @@ class Mandrill
         if ( ! isset($params['mandrillApiKey'])) {
             throw new \Exception('Mandrill\'s apiKey not set');
         }
-        $this->apiKey = $params['apiKey'];
+        $this->apiKey = $params['mandrillApiKey'];
     }
 
     /**
