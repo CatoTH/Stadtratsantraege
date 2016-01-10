@@ -24,9 +24,7 @@ foreach ($antrag->tags as $tag) {
     $row_classes[] = 'tag_' . $tag->id;
 }
 $row_classes[] = 'typ_' . $antrag->getTypId();
-$frist         = ($antrag->fristverlaengerung ? $antrag->fristverlaengerung : $antrag->bearbeitungsfrist);
-$abgelaufen    = (date('Ymd') >= str_replace('-', '', $frist));
-if ($abgelaufen) {
+if ($antrag->istAbgelaufen()) {
     $row_classes[] = 'abgelaufen';
 }
 if ($antrag->fristverlaengerung) {

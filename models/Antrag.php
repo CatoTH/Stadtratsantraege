@@ -112,4 +112,34 @@ class Antrag extends ActiveRecord
 
         return $part[2] . '.' . $part[1] . '.' . $part[0];
     }
+
+    /**
+     * @return bool
+     */
+    public function istAbgelaufen()
+    {
+        if (str_replace('-', '', $this->bearbeitungsfrist) > date('Ymd')) {
+            return false;
+        }
+        if ($this->fristverlaengerung != '' && str_replace('-', '', $this->fristverlaengerung) > date('Ymd')) {
+            return false;
+        }
+        if ($this->status == 'erledigt') {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * @return Antrag[]
+     */
+    public static function getAbgelaufene()
+    {
+        $sql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
+               'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
+               'AND status != "erledigt" ' .
+               'AND bearbeitungsfrist_benachrichtigung IS NULL';
+
+        return Antrag::find()->where($sql)->all();
+    }
 }

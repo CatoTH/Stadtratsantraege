@@ -23,12 +23,8 @@ class NotificationController extends Controller
 
         $abgelaufenStr = $verlaengertStr = '';
 
-        $abgelaufenSql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
-                         'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
-                         'AND status != "erledigt" ' .
-                         'AND bearbeitungsfrist_benachrichtigung IS NULL';
         /** @var Antrag[] $antraege */
-        $antraege = Antrag::find()->where($abgelaufenSql)->all();
+        $antraege = Antrag::find()->where(Antrag::getAbgelaufenSql())->all();
         foreach ($antraege as $antrag) {
             $abgelaufen[] = $antrag;
             if ($abgelaufenStr == '') {
