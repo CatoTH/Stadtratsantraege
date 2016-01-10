@@ -18,16 +18,16 @@ $sortTitle = function ($titel, $curr_sort, $curr_desc, $my_sort, $default_desc) 
     if ($curr_sort == $my_sort) {
         $url = Url::toRoute(['site/index', 'sort' => $my_sort, 'sort_desc' => ($curr_desc ? 0 : 1)]);
         if ($curr_desc) {
-            $text = '<span style="color: black; font-weight: bold;">v ' . $titel . '</span>';
+            $text = '<span style="color: black; font-weight: bold;"><span class="glyphicon glyphicon-chevron-down"></span> ' . $titel . '</span>';
         } else {
-            $text = '<span style="color: black; font-weight: bold;">X ' . $titel . '</span>';
+            $text = '<span style="color: black; font-weight: bold;"><span class="glyphicon glyphicon-chevron-up"></span> ' . $titel . '</span>';
         }
     } else {
         $url = Url::toRoute(['site/index', 'sort' => $my_sort, 'sort_desc' => $default_desc]);
         if ($default_desc) {
-            $text = '<span class="sort_hidden">v</span> ' . $titel . '</span>';
+            $text = '<span class="sort_hidden"><span class="glyphicon glyphicon-chevron-down"></span></span> ' . $titel . '</span>';
         } else {
-            $text = '<span class="sort_hidden">X</span> ' . $titel . '</span>';
+            $text = '<span class="sort_hidden"><span class="glyphicon glyphicon-chevron-up"></span></span> ' . $titel . '</span>';
         }
     }
     echo Html::a($text, $url, ['class' => 'sort_link']);
