@@ -1,4 +1,7 @@
 jQuery(function () {
+    var $antragsliste = $("#antragsliste"),
+        $adderRow = $('.adder-row');
+
     $('.selectlist').selectlist();
     $('.checkbox').checkbox();
 
@@ -33,14 +36,44 @@ jQuery(function () {
     });
     tagnames.initialize();
 
-    $('.entertags').tagsinput({
-        typeaheadjs: {
-            name: 'tagnames',
-            displayKey: 'name',
-            valueKey: 'name',
-            source: tagnames.ttAdapter()
+
+    var scrolled = false,
+        $trs = $antragsliste.find("> tbody > tr"),
+        onScrollFunc = function () {
+            var foundVisible = false,
+                foundInvisibleAfterVisible = false;
+            for (var i = 0; i < $trs.length && !foundInvisibleAfterVisible; i++) {
+                var $tr = $($trs[i]),
+                    visible = $tr.is(":in-viewport");
+                if (visible) {
+                    foundVisible = true;
+                } else if (foundVisible) {
+                    foundInvisibleAfterVisible = true;
+                }
+                if (!$tr.data("entertags_inited")) {
+                    $tr.data("entertags_inited", "1");
+                    $tr.find('.entertags').tagsinput({
+                        typeaheadjs: {
+                            name: 'tagnames',
+                            displayKey: 'name',
+                            valueKey: 'name',
+                            source: tagnames.ttAdapter()
+                        }
+                    });
+                }
+            }
+
+        };
+    window.setInterval(function () {
+        if (scrolled) {
+            scrolled = false;
+            onScrollFunc();
         }
+    }, 100);
+    $(window).scroll(function () {
+        scrolled = true;
     });
+    onScrollFunc();
 
     var rebuildList = function () {
         var initiator = $("input[name=filter_initiator]").val(),
@@ -79,8 +112,8 @@ jQuery(function () {
 
 
     $('.eintrag_add_button').click(function () {
-        $('.adder-row').removeClass('hidden');
-        $('.adder-row').find("input").first().focus();
+        $adderRow.removeClass('hidden');
+        $adderRow.find("input").first().focus();
     });
     $('.adder-row .aktion button').click(function () {
         var $adderRow = $('.adder-row'),
@@ -119,7 +152,7 @@ jQuery(function () {
     });
 
 
-    $('#antragsliste').on('click', '.save-button', function () {
+    $antragsliste.on('click', '.save-button', function () {
         var $row = $(this).parents("tr").first(),
             data = {},
             params = {};
@@ -162,7 +195,7 @@ jQuery(function () {
         });
     });
 
-    $('#antragsliste').on('click', '.del-button', function () {
+    $antragsliste.on('click', '.del-button', function () {
         if (!window.confirm("Diesen Antrag wirklich löschen?")) {
             return;
         }
@@ -173,7 +206,6 @@ jQuery(function () {
         $.post($(this).data("target"), params, function (ret) {
             if (ret['success']) {
                 $row.remove();
-                console.log("success");
             } else {
                 alert(ret['error']);
             }
