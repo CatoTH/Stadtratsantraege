@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property string|null $bearbeitungsfrist_benachrichtigung
  * @property string|null $fristverlaengerung
  * @property string|null $fristverlaengerung_benachrichtigung
+ * @property string $erledigt_am
  * @property string $status
  * @property string $status_override
  * @property string $notiz

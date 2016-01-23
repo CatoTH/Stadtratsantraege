@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 23, 2016 at 12:54 PM
+-- Generation Time: Jan 23, 2016 at 01:46 PM
 -- Server version: 5.7.10
 -- PHP Version: 7.0.2-1~dotdeb+8.1
 
@@ -31,6 +31,7 @@ CREATE TABLE `antraege` (
   `bearbeitungsfrist_benachrichtigung` date DEFAULT NULL,
   `fristverlaengerung` date DEFAULT NULL,
   `fristverlaengerung_benachrichtigung` date DEFAULT NULL,
+  `erledigt_am` date DEFAULT NULL,
   `status` varchar(150) NOT NULL,
   `status_override` varchar(150) NOT NULL,
   `notiz` text NOT NULL
@@ -152,7 +153,7 @@ ALTER TABLE `antraege`
 -- AUTO_INCREMENT for table `stadtraetinnen`
 --
 ALTER TABLE `stadtraetinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 --
 -- AUTO_INCREMENT for table `tags`
 --

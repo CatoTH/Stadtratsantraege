@@ -1,10 +1,10 @@
 $icon-font-path: "/fonts/";
 
 @import "bootstrap";
-@import "../fuelux-3.13.0/dist/css/fuelux.min";
-@import "../bootstrap-tagsinput/bootstrap-tagsinput";
-@import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead";
-@import "../js/bower/bower-asset/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker";
+@import "../fuelux-3.13.0/dist/css/fuelux.min.css";
+@import "../bootstrap-tagsinput/bootstrap-tagsinput.css";
+@import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css";
+@import "../js/bower/bower-asset/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
 #main-content {
   width: 100%;
@@ -16,6 +16,10 @@ $icon-font-path: "/fonts/";
   table-layout: fixed;
   border: solid 1px #88D959;
   border-radius: 5px;
+
+  a, a:link, a:visited {
+    color: darken(#337ab7, 7%);
+  }
 
   th, td {
     text-align: left;
@@ -87,6 +91,7 @@ $icon-font-path: "/fonts/";
   td.antragsdatum {
     dd, dt {
       display: inline-block;
+      font-size: 13px;
     }
     dt {
       width: 60px;
@@ -143,3 +148,17 @@ $icon-font-path: "/fonts/";
   }
 }
 
+.zeitraumFilter {
+  padding: 10px;
+  background: #f7f7f7;
+  border-bottom: solid 1px #ccc;
+  margin: -20px -20px 20px;
+  overflow: auto;
+
+  .zeitraum {
+    float: left;
+  }
+  .aes {
+    float: right;
+  }
+}

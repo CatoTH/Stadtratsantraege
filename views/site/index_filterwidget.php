@@ -2,9 +2,6 @@
 use yii\helpers\Html;
 
 ?>
-<button style="float: right;" class="btn btn-default eintrag_add_button" type="button">Neuer Eintrag
-</button>
-
 <div class="filter">
     <label class="hidden" for="filter_titel"></label>
     <input type="text" name="filter_titel" id="filter_titel" class="form-control filter_titel"

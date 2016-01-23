@@ -32,15 +32,22 @@ if ($antrag->fristverlaengerung) {
 }
 $target     = Url::toRoute(['site/saveantrag', 'antrag_id' => $antrag->id]);
 $del_target = Url::toRoute(['site/delantrag']);
+if ($antrag->typ == 'Ergaenzungsantrag') {
+    $typ_name = 'Ergänzungsantrag';
+} elseif ($antrag->typ == 'Aenderungsantrag') {
+    $typ_name = 'Änderungsantrag';
+} else {
+    $typ_name = $antrag->typ;
+}
 ?>
 <tr class="<?= implode(' ', $row_classes) ?>"
     data-antrag-id="<?= $antrag->id ?>" data-target="<?= Html::encode($target) ?>">
     <td class="titelRow">
-        <div class="typ"><?= Html::encode($antrag->typ) ?></div>
+        <div class="typ"><?= Html::encode($typ_name) ?></div>
         <a href="<?= Html::encode($link) ?>" target="_blank"><?= Html::encode($antrag->titel) ?></a>
 
     </td>
-    <td class="antragstellerin"><?= implode(', ', $stadtraetinnen) ?></td>
+    <td class="antragstellerin"><br><?= implode(', ', $stadtraetinnen) ?></td>
     <td class="antragsdatum"><br>
         <dl>
             <dt>Antrag:</dt>
@@ -52,7 +59,12 @@ $del_target = Url::toRoute(['site/delantrag']);
             <?php if ($antrag->fristverlaengerung) { ?>
                 <dt class="verlaengert">Verlängert:</dt>
                 <dd><?= Antrag::formatDate($antrag->fristverlaengerung) ?></dd>
-            <?php } ?>
+            <?php }
+            if ($antrag->erledigt_am) { ?>
+                <dt class="verlaengert">Erledigt:</dt>
+                <dd><?= Antrag::formatDate($antrag->erledigt_am) ?></dd>
+            <?php }
+            ?>
         </dl>
     </td>
     <td>

@@ -54,6 +54,7 @@ class ImportController extends Controller
         $antrag->bearbeitungsfrist  = $antragData['bearbeitungsfrist'];
         $antrag->fristverlaengerung = $antragData['fristverlaengerung'];
         $antrag->status             = $antragData['status'];
+        $antrag->erledigt_am        = $antragData['erledigt_am'];
         $antrag->notiz              = '';
         $antrag->save();
 

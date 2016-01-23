@@ -17,23 +17,39 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($sort = Antrag::SORT_DATUM, $sort_desc = 1)
+    public function actionIndex($sort = Antrag::SORT_DATUM, $sort_desc = 1, $zeitraum_jahre = 2, $aenderungsantraege = 0)
     {
+        $where = '';
+        if (!$aenderungsantraege || $zeitraum_jahre > 0) {
+            $where = ' WHERE';
+            if ($zeitraum_jahre > 0) {
+                $where .= ' gestellt_am > NOW() - INTERVAL ' . IntVal($zeitraum_jahre) . ' YEAR';
+            }
+            if ($zeitraum_jahre > 0 && !$aenderungsantraege) {
+                $where .= ' AND';
+            }
+            if (!$aenderungsantraege) {
+                $where .= ' typ != "Ergaenzungsantrag" AND typ != "Aenderungsantrag"';
+            }
+        }
+
+
         if ($sort == Antrag::SORT_DATUM) {
-            $sql = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist ' .
-                   'FROM antraege ORDER BY frist';
+            $sql = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist FROM antraege' . $where;
+
+            $sql .= ' ORDER BY frist';
             if ($sort_desc) {
                 $sql .= ' DESC';
             }
             $antraege = Antrag::findBySql($sql)->all();
         } elseif ($sort == Antrag::SORT_TITEL) {
-            $sql = 'SELECT * FROM antraege ORDER BY titel';
+            $sql = 'SELECT * FROM antraege' . $where . ' ORDER BY titel';
             if ($sort_desc) {
                 $sql .= ' DESC';
             }
             $antraege = Antrag::findBySql($sql)->all();
         } elseif ($sort == Antrag::SORT_STATUS) {
-            $antraege = Antrag::findBySql('SELECT * FROM antraege')->all();
+            $antraege = Antrag::findBySql('SELECT * FROM antraege' . $where)->all();
             usort($antraege, function (Antrag $antrag1, Antrag $antrag2) use ($sort_desc) {
                 $status1 = $antrag1->getStatusId();
                 $status2 = $antrag2->getStatusId();
@@ -48,9 +64,11 @@ class SiteController extends Controller
         }
 
         return $this->render('index', [
-            'antraege'  => $antraege,
-            'sort'      => $sort,
-            'sort_desc' => $sort_desc,
+            'antraege'           => $antraege,
+            'sort'               => $sort,
+            'sort_desc'          => $sort_desc,
+            'zeitraum_jahre'     => $zeitraum_jahre,
+            'aenderungsantraege' => $aenderungsantraege,
         ]);
     }
 
@@ -62,7 +80,7 @@ class SiteController extends Controller
         \yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         \yii::$app->response->headers->add('Content-Type', 'application/json');
 
-        if ( ! isset($_POST['antrag'])) {
+        if (!isset($_POST['antrag'])) {
             return json_encode(['error' => 'no data']);
         }
 
@@ -82,7 +100,7 @@ class SiteController extends Controller
         $tags = explode(',', $data['tags']);
         foreach ($tags as $tagName) {
             $tag = Tag::findOne(['name' => $tagName]);
-            if ( ! $tag) {
+            if (!$tag) {
                 $tag       = new Tag();
                 $tag->name = $tagName;
                 $tag->save();
@@ -117,12 +135,12 @@ class SiteController extends Controller
 
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne($antrag_id);
-        if ( ! $antrag) {
+        if (!$antrag) {
             return json_encode(['error' => 'Antrag nicht gefunden.']);
         }
 
         $antrag->notiz = $_POST['antrag']['notiz'];
-        if ( ! $antrag->save()) {
+        if (!$antrag->save()) {
             return json_encode(['error' => 'Es ist ein (seltsamer) Fehler beim Speichern aufgetreten.']);
         }
 
@@ -132,7 +150,7 @@ class SiteController extends Controller
         $tags = explode(',', $_POST['antrag']['tags']);
         foreach ($tags as $tagName) {
             $tag = Tag::findOne(['name' => $tagName]);
-            if ( ! $tag) {
+            if (!$tag) {
                 $tag       = new Tag();
                 $tag->name = $tagName;
                 $tag->save();
