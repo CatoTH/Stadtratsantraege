@@ -10,7 +10,7 @@ $row_classes    = [];
 $stadtraetinnen = [];
 $tags           = [];
 $link           = 'https://www.muenchen-transparent.de/antraege/' . $antrag->ris_id;
-foreach ($antrag->stadtraetinnen as $stadtraetin) {
+foreach ($antrag->initiatorinnen as $stadtraetin) {
     $row_classes[] = 'stadtraetin_' . $stadtraetin->id;
     if ($stadtraetin->fraktionsmitglied) {
         $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));

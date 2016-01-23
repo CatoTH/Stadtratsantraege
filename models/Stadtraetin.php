@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property int $fraktionsmitglied
  *
  * @property Antrag[] $antraege
+ * @property Antrag[] $initiierteAntraege
  */
 class Stadtraetin extends ActiveRecord
 {
@@ -30,6 +31,15 @@ class Stadtraetin extends ActiveRecord
     {
         return $this->hasMany(Antrag::class, ['id' => 'antrag_id'])
                     ->viaTable('antraege_stadtraetinnen', ['stadtraetin_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInitiierteAntraege()
+    {
+        return $this->hasMany(Antrag::class, ['id' => 'antrag_id'])
+                    ->viaTable('antraege_initiatorinnen', ['stadtraetin_id' => 'id']);
     }
 
     /** @var null|Stadtraetin[] */

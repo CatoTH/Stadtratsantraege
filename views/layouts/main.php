@@ -24,6 +24,7 @@ $this->beginPage();
     <script src="/js/bower/bower-asset/html5shiv/dist/html5shiv.min.js"></script>
     <script src="/js/bower/bower-asset/es5-shim/es5-shim.js"></script>
     <script src="/js/bower/bower-asset/jquery/dist/jquery.min.js"></script>
+    <script src="/js/jquery.viewport.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/fuelux-3.13.0/dist/js/fuelux.min.js"></script>
     <script src="/js/bower/bower-asset/typeahead.js/dist/typeahead.bundle.js"></script>

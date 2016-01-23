@@ -21,7 +21,7 @@ class ImportController extends Controller
         }
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne(['ris_id' => $antragData['id']]);
-        if ( ! $antrag) {
+        if (!$antrag) {
             $antrag         = new Antrag();
             $antrag->ris_id = $antragData['id'];
         } else {
@@ -32,19 +32,19 @@ class ImportController extends Controller
             if ($antrag->bearbeitungsfrist != $antragData['bearbeitungsfrist']) {
                 $antrag->notiz = trim($antrag->notiz) . "\n";
                 $antrag->notiz .= date("d.m.Y.") . ": Bearbeitungsfrist: " .
-                                  $antrag->bearbeitungsfrist . " -> " . $antragData['bearbeitungsfrist'];
+                    $antrag->bearbeitungsfrist . " -> " . $antragData['bearbeitungsfrist'];
                 $antrag->bearbeitungsfrist_benachrichtigung = null;
             }
             if ($antrag->fristverlaengerung != $antragData['fristverlaengerung']) {
                 $antrag->notiz = trim($antrag->notiz) . "\n";
                 $antrag->notiz .= date("d.m.Y.") . ": Fristverlängerung: " .
-                                  $antrag->fristverlaengerung . " -> " . $antragData['fristverlaengerung'];
+                    $antrag->fristverlaengerung . " -> " . $antragData['fristverlaengerung'];
                 $antrag->fristverlaengerung_benachrichtigung = null;
             }
             if ($antrag->gestellt_am != $antragData['gestellt_am']) {
                 $antrag->notiz = trim($antrag->notiz) . "\n";
                 $antrag->notiz .= date("d.m.Y.") . ": Gestellt am: " .
-                                  $antrag->gestellt_am . " -> " . $antragData['gestellt_am'];
+                    $antrag->gestellt_am . " -> " . $antragData['gestellt_am'];
             }
         }
         $antrag->titel              = mb_substr($antragData['betreff'], 0, 200);
@@ -60,16 +60,36 @@ class ImportController extends Controller
         foreach ($antrag->stadtraetinnen as $stadtraetin) {
             $antrag->unlink('stadtraetinnen', $stadtraetin, true);
         }
+        foreach ($antrag->initiatorinnen as $initiatorin) {
+            $antrag->unlink('initiatorinnen', $initiatorin, true);
+        }
 
         foreach ($antragData['stadtraetInnen'] as $stadtraetInData) {
-            $stadtraetin = Stadtraetin::findOne(['ris_id' => $stadtraetInData['id']]);
-            if ( ! $stadtraetin) {
+            $ris_id = ($stadtraetInData['id'] > 0 ? $stadtraetInData['id'] : 0);
+            $stadtraetin = Stadtraetin::findOne(['ris_id' => $ris_id]);
+            if (!$stadtraetin) {
                 $stadtraetin         = new Stadtraetin();
                 $stadtraetin->ris_id = $stadtraetInData['id'];
                 $stadtraetin->name   = $stadtraetInData['name'];
                 $stadtraetin->save();
             }
-            $antrag->link('stadtraetinnen', $stadtraetin);
+            try {
+                $antrag->link('stadtraetinnen', $stadtraetin);
+            } catch (\Exception $e) {}
+        }
+
+        foreach ($antragData['initiatorInnen'] as $initiatorInData) {
+            $ris_id = ($initiatorInData['id'] > 0 ? $initiatorInData['id'] : 0);
+            $stadtraetin = Stadtraetin::findOne(['ris_id' => $ris_id]);
+            if (!$stadtraetin) {
+                $stadtraetin         = new Stadtraetin();
+                $stadtraetin->ris_id = $stadtraetInData['id'];
+                $stadtraetin->name   = $stadtraetInData['name'];
+                $stadtraetin->save();
+            }
+            try {
+                $antrag->link('initiatorinnen', $stadtraetin);
+            } catch (\Exception $e) {}
         }
     }
 
@@ -124,7 +144,7 @@ class ImportController extends Controller
             $data = $this->downloadUrl($importUrl);
         } catch (\Exception $e) {
             $this->stderr($e->getMessage() . "\n\n");
-            return -1;
+            return;
         }
         $data = json_decode($data, true);
         foreach ($data as $antragData) {

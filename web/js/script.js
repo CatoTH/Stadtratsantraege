@@ -38,9 +38,9 @@ jQuery(function () {
 
 
     var scrolled = false,
-        $trs = $antragsliste.find("> tbody > tr"),
         onScrollFunc = function () {
-            var foundVisible = false,
+            var $trs = $antragsliste.find("> tbody > tr:visible"),
+                foundVisible = false,
                 foundInvisibleAfterVisible = false;
             for (var i = 0; i < $trs.length && !foundInvisibleAfterVisible; i++) {
                 var $tr = $($trs[i]),

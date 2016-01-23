@@ -17,10 +17,12 @@ use yii\db\ActiveRecord;
  * @property string|null $fristverlaengerung
  * @property string|null $fristverlaengerung_benachrichtigung
  * @property string $status
+ * @property string $status_override
  * @property string $notiz
  *
  * @property Tag[] $tags
  * @property Stadtraetin[] $stadtraetinnen
+ * @property Stadtraetin[] $initiatorinnen
  */
 class Antrag extends ActiveRecord
 {
@@ -59,6 +61,15 @@ class Antrag extends ActiveRecord
     {
         return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
                     ->viaTable('antraege_stadtraetinnen', ['antrag_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getInitiatorinnen()
+    {
+        return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
+                    ->viaTable('antraege_initiatorinnen', ['antrag_id' => 'id']);
     }
 
     /**
@@ -124,7 +135,10 @@ class Antrag extends ActiveRecord
         if ($this->fristverlaengerung != '' && str_replace('-', '', $this->fristverlaengerung) > date('Ymd')) {
             return false;
         }
-        if ($this->status == 'erledigt') {
+        if ($this->status_override == 'erledigt') {
+            return false;
+        }
+        if ($this->status_override == '' && $this->status == 'erledigt') {
             return false;
         }
         return true;
@@ -137,7 +151,7 @@ class Antrag extends ActiveRecord
     {
         $sql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
                'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
-               'AND status != "erledigt" ' .
+               'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "") ' .
                'AND bearbeitungsfrist_benachrichtigung IS NULL';
 
         return Antrag::find()->where($sql)->all();
