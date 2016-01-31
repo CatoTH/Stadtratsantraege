@@ -24,11 +24,12 @@ use yii\db\ActiveRecord;
  * @property Tag[] $tags
  * @property Stadtraetin[] $stadtraetinnen
  * @property Stadtraetin[] $initiatorinnen
+ * @property Dokument[] $dokumente
  */
 class Antrag extends ActiveRecord
 {
-    const SORT_DATUM = 0;
-    const SORT_TITEL = 1;
+    const SORT_DATUM  = 0;
+    const SORT_TITEL  = 1;
     const SORT_STATUS = 2;
 
     public static $STATI = [
@@ -61,7 +62,7 @@ class Antrag extends ActiveRecord
     public function getStadtraetinnen()
     {
         return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
-                    ->viaTable('antraege_stadtraetinnen', ['antrag_id' => 'id']);
+            ->viaTable('antraege_stadtraetinnen', ['antrag_id' => 'id']);
     }
 
     /**
@@ -70,7 +71,7 @@ class Antrag extends ActiveRecord
     public function getInitiatorinnen()
     {
         return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
-                    ->viaTable('antraege_initiatorinnen', ['antrag_id' => 'id']);
+            ->viaTable('antraege_initiatorinnen', ['antrag_id' => 'id']);
     }
 
     /**
@@ -79,7 +80,14 @@ class Antrag extends ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-                    ->viaTable('antraege_tags', ['antrag_id' => 'id']);
+            ->viaTable('antraege_tags', ['antrag_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDokumente() {
+        return $this->hasMany(Dokument::class, ['antrag_id' => 'id']);
     }
 
     /**
@@ -136,13 +144,19 @@ class Antrag extends ActiveRecord
         if ($this->fristverlaengerung != '' && str_replace('-', '', $this->fristverlaengerung) > date('Ymd')) {
             return false;
         }
-        if ($this->status_override == 'erledigt') {
-            return false;
+        return !$this->istErledigt();
+    }
+
+    /**
+     * @return bool
+     */
+    public function istErledigt()
+    {
+        if ($this->status_override == '') {
+            return ($this->status == 'erledigt');
+        } else {
+            return ($this->status_override == 'erledigt');
         }
-        if ($this->status_override == '' && $this->status == 'erledigt') {
-            return false;
-        }
-        return true;
     }
 
     /**
@@ -151,9 +165,9 @@ class Antrag extends ActiveRecord
     public static function getAbgelaufene()
     {
         $sql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
-               'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
-               'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "") ' .
-               'AND bearbeitungsfrist_benachrichtigung IS NULL';
+            'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
+            'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "") ' .
+            'AND bearbeitungsfrist_benachrichtigung IS NULL';
 
         return Antrag::find()->where($sql)->all();
     }

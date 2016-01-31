@@ -40,7 +40,7 @@ $icon-font-path: "/fonts/";
   }
 
   th.antragsdatum {
-    width: 200px;
+    width: 180px;
   }
 
   th.status {
@@ -49,6 +49,12 @@ $icon-font-path: "/fonts/";
 
   th.aktion {
     width: 50px;
+  }
+
+  @media screen and (min-width: 1400px) {
+    th.status {
+      width: 21%;
+    }
   }
 
   .sort_link {
@@ -132,6 +138,7 @@ $icon-font-path: "/fonts/";
 
   textarea {
     width: 100%;
+    font-size: 13px;
   }
 
   .bootstrap-tagsinput .label {
@@ -139,6 +146,40 @@ $icon-font-path: "/fonts/";
     font-weight: normal;
   }
 
+  .abgeschlossen_override {
+    float: right;
+    font-weight: normal;
+    font-size: 0.8em;
+    vertical-align: middle;
+    color: gray;
+
+    input {
+      vertical-align: middle;
+      margin-top: 1px;
+    }
+  }
+
+  .overridden {
+    text-decoration: line-through;;
+    color: gray;
+  }
+
+  ul.dokumentliste {
+    list-style-type: none;
+    margin: 0;
+    margin-top: 10px;
+    padding: 0;
+    font-size: 13px;
+    li {
+      margin: 0;
+      padding: 0;
+      padding-left: 20px;
+      color: gray;
+      a, a:link, a:visited {
+        color: lighten(#337ab7, 7%);
+      }
+    }
+  }
 }
 
 #filterWidget {

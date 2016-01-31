@@ -39,13 +39,31 @@ if ($antrag->typ == 'Ergaenzungsantrag') {
 } else {
     $typ_name = $antrag->typ;
 }
+
+/** @var \app\models\Dokument[] $dokumente */
+$dokumente = [];
+foreach ($antrag->dokumente as $dokument) {
+    if (in_array($dokument->titel, ['B90GrüneRL - Antrag', 'Originalantrag'])) {
+        continue;
+    }
+    $dokumente[] = $dokument;
+}
 ?>
 <tr class="<?= implode(' ', $row_classes) ?>"
     data-antrag-id="<?= $antrag->id ?>" data-target="<?= Html::encode($target) ?>">
     <td class="titelRow">
         <div class="typ"><?= Html::encode($typ_name) ?></div>
         <a href="<?= Html::encode($link) ?>" target="_blank"><?= Html::encode($antrag->titel) ?></a>
-
+        <ul class="dokumentliste">
+            <?php
+            foreach ($dokumente as $dokument) {
+                echo '<li><span class="glyphicon glyphicon-file"></span> ';
+                echo Html::a($dokument->titel, $dokument->url);
+                echo ' (' . \app\components\HtmlTools::formatDate($dokument->datum) . ')';
+                echo '</li>';
+            }
+            ?>
+        </ul>
     </td>
     <td class="antragstellerin"><br><?= implode(', ', $stadtraetinnen) ?></td>
     <td class="antragsdatum"><br>
@@ -68,7 +86,19 @@ if ($antrag->typ == 'Ergaenzungsantrag') {
         </dl>
     </td>
     <td>
-        <?= Html::encode($antrag->status) ?>
+        <label class="abgeschlossen_override">
+            <span>Abgeschlossen</span>
+            <input type="checkbox" name="abgeschlossen" <? if ($antrag->istErledigt()) {
+                echo 'checked';
+            } ?>>
+        </label>
+        <?php
+        if ($antrag->status_override != '' && $antrag->status != $antrag->status_override) {
+            echo Html::encode($antrag->status_override) . ' <span class="overridden">' . Html::encode($antrag->status) . '</span>';
+        } else {
+            echo Html::encode($antrag->status);
+        }
+        ?>
         <br>
         <textarea placeholder="Notiz, aktueller Stand" name="notiz" class="form-control"><?
             echo Html::encode($antrag->notiz);

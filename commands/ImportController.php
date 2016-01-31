@@ -2,7 +2,9 @@
 
 namespace app\commands;
 
+use app\components\HtmlTools;
 use app\models\Antrag;
+use app\models\Dokument;
 use app\models\Stadtraetin;
 use yii\console\Controller;
 
@@ -24,27 +26,26 @@ class ImportController extends Controller
         if (!$antrag) {
             $antrag         = new Antrag();
             $antrag->ris_id = $antragData['id'];
+            $antrag->notiz  = '';
         } else {
             if ($antrag->status != $antragData['status']) {
-                $antrag->notiz = trim($antrag->notiz) . "\n";
-                $antrag->notiz .= date("d.m.Y.") . ": Status: " . $antrag->status . " -> " . $antragData['status'];
+                $antrag->notiz = date("d.m.Y.") . ": Status: " . $antrag->status . " -> " . $antragData['status'] . "\n" . trim($antrag->notiz);
             }
             if ($antrag->bearbeitungsfrist != $antragData['bearbeitungsfrist']) {
-                $antrag->notiz = trim($antrag->notiz) . "\n";
-                $antrag->notiz .= date("d.m.Y.") . ": Bearbeitungsfrist: " .
-                    $antrag->bearbeitungsfrist . " -> " . $antragData['bearbeitungsfrist'];
+                $antrag->notiz                              = date("d.m.Y.") . ": Bearbeitungsfrist: " .
+                    HtmlTools::formatDate($antrag->bearbeitungsfrist) . " -> " . HtmlTools::formatDate($antragData['bearbeitungsfrist']) .
+                    "\n" . trim($antrag->notiz);
                 $antrag->bearbeitungsfrist_benachrichtigung = null;
             }
             if ($antrag->fristverlaengerung != $antragData['fristverlaengerung']) {
-                $antrag->notiz = trim($antrag->notiz) . "\n";
-                $antrag->notiz .= date("d.m.Y.") . ": Fristverlängerung: " .
-                    $antrag->fristverlaengerung . " -> " . $antragData['fristverlaengerung'];
+                $antrag->notiz                               = date("d.m.Y.") . ": Fristverlängerung: " .
+                    HtmlTools::formatDate($antragData['fristverlaengerung']) . "\n" . trim($antrag->notiz);
                 $antrag->fristverlaengerung_benachrichtigung = null;
             }
             if ($antrag->gestellt_am != $antragData['gestellt_am']) {
-                $antrag->notiz = trim($antrag->notiz) . "\n";
-                $antrag->notiz .= date("d.m.Y.") . ": Gestellt am: " .
-                    $antrag->gestellt_am . " -> " . $antragData['gestellt_am'];
+                $antrag->notiz = date("d.m.Y.") . ": Gestellt am: " .
+                    HtmlTools::formatDate($antrag->gestellt_am) . " -> " . HtmlTools::formatDate($antragData['gestellt_am']) .
+                    "\n" . trim($antrag->notiz);
             }
         }
         $antrag->titel              = mb_substr($antragData['betreff'], 0, 200);
@@ -55,7 +56,9 @@ class ImportController extends Controller
         $antrag->fristverlaengerung = $antragData['fristverlaengerung'];
         $antrag->status             = $antragData['status'];
         $antrag->erledigt_am        = $antragData['erledigt_am'];
-        $antrag->notiz              = '';
+        if ($antrag->status == $antrag->status_override) {
+            $antrag->status_override = '';
+        }
         $antrag->save();
 
         foreach ($antrag->stadtraetinnen as $stadtraetin) {
@@ -66,7 +69,7 @@ class ImportController extends Controller
         }
 
         foreach ($antragData['stadtraetInnen'] as $stadtraetInData) {
-            $ris_id = ($stadtraetInData['id'] > 0 ? $stadtraetInData['id'] : 0);
+            $ris_id      = ($stadtraetInData['id'] > 0 ? $stadtraetInData['id'] : 0);
             $stadtraetin = Stadtraetin::findOne(['ris_id' => $ris_id]);
             if (!$stadtraetin) {
                 $stadtraetin         = new Stadtraetin();
@@ -76,21 +79,36 @@ class ImportController extends Controller
             }
             try {
                 $antrag->link('stadtraetinnen', $stadtraetin);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
         }
 
         foreach ($antragData['initiatorInnen'] as $initiatorInData) {
-            $ris_id = ($initiatorInData['id'] > 0 ? $initiatorInData['id'] : 0);
-            $stadtraetin = Stadtraetin::findOne(['ris_id' => $ris_id]);
-            if (!$stadtraetin) {
-                $stadtraetin         = new Stadtraetin();
-                $stadtraetin->ris_id = $stadtraetInData['id'];
-                $stadtraetin->name   = $stadtraetInData['name'];
-                $stadtraetin->save();
+            $ris_id      = ($initiatorInData['id'] > 0 ? $initiatorInData['id'] : 0);
+            $initiatorin = Stadtraetin::findOne(['ris_id' => $ris_id]);
+            if (!$initiatorin) {
+                $initiatorin         = new Stadtraetin();
+                $initiatorin->ris_id = $initiatorInData['id'];
+                $initiatorin->name   = $initiatorInData['name'];
+                $initiatorin->save();
             }
             try {
-                $antrag->link('initiatorinnen', $stadtraetin);
-            } catch (\Exception $e) {}
+                $antrag->link('initiatorinnen', $initiatorin);
+            } catch (\Exception $e) {
+            }
+        }
+
+        foreach ($antragData['dokumente'] as $dokumentData) {
+            $dokument = Dokument::findOne(['dokument_id' => $dokumentData['id']]);
+            if (!$dokument) {
+                $dokument              = new Dokument();
+                $dokument->dokument_id = $dokumentData['id'];
+            }
+            $dokument->antrag_id = $antrag->id;
+            $dokument->titel     = $dokumentData['titel'];
+            $dokument->datum     = $dokumentData['datum'];
+            $dokument->url       = $dokumentData['pdf'];
+            $dokument->save();
         }
     }
 

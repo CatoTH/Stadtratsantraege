@@ -140,6 +140,11 @@ class SiteController extends Controller
         }
 
         $antrag->notiz = $_POST['antrag']['notiz'];
+        if ($_POST['antrag']['abgeschlossen'] == 1) {
+            $antrag->status_override = ($antrag->status == 'erledigt' ? '' : 'erledigt');
+        } else {
+            $antrag->status_override = ($antrag->status == 'erledigt' ? 'In Bearbeitung' : '');
+        }
         if (!$antrag->save()) {
             return json_encode(['error' => 'Es ist ein (seltsamer) Fehler beim Speichern aufgetreten.']);
         }

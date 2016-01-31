@@ -159,6 +159,7 @@ jQuery(function () {
 
         data['tags'] = $row.find(".entertags").val();
         data['notiz'] = $row.find("textarea[name=notiz]").val();
+        data['abgeschlossen'] = ($row.find("input[name=abgeschlossen]").prop("checked") ? 1 : 0);
 
         params['antrag'] = data;
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
