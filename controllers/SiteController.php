@@ -17,7 +17,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($sort = Antrag::SORT_DATUM, $sort_desc = 1, $zeitraum_jahre = 2, $aenderungsantraege = 0)
+    public function actionIndex($sort = Antrag::SORT_DATUM_FRIST, $sort_desc = 1, $zeitraum_jahre = 2, $aenderungsantraege = 0)
     {
         $where = '';
         if (!$aenderungsantraege || $zeitraum_jahre > 0) {
@@ -34,7 +34,7 @@ class SiteController extends Controller
         }
 
 
-        if ($sort == Antrag::SORT_DATUM) {
+        if ($sort == Antrag::SORT_DATUM_FRIST) {
             $sql = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist FROM antraege' . $where;
 
             $sql .= ' ORDER BY frist';
@@ -44,6 +44,12 @@ class SiteController extends Controller
             $antraege = Antrag::findBySql($sql)->all();
         } elseif ($sort == Antrag::SORT_TITEL) {
             $sql = 'SELECT * FROM antraege' . $where . ' ORDER BY titel';
+            if ($sort_desc) {
+                $sql .= ' DESC';
+            }
+            $antraege = Antrag::findBySql($sql)->all();
+        } elseif ($sort == Antrag::SORT_DATUM_ANTRAG) {
+            $sql = 'SELECT * FROM antraege' . $where . ' ORDER BY gestellt_am';
             if ($sort_desc) {
                 $sql .= ' DESC';
             }

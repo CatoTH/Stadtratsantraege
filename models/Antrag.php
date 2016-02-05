@@ -28,9 +28,10 @@ use yii\db\ActiveRecord;
  */
 class Antrag extends ActiveRecord
 {
-    const SORT_DATUM  = 0;
-    const SORT_TITEL  = 1;
-    const SORT_STATUS = 2;
+    const SORT_DATUM_FRIST  = 0;
+    const SORT_TITEL        = 1;
+    const SORT_STATUS       = 2;
+    const SORT_DATUM_ANTRAG = 3;
 
     public static $STATI = [
         0 => 'erledigt',
@@ -86,7 +87,8 @@ class Antrag extends ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDokumente() {
+    public function getDokumente()
+    {
         return $this->hasMany(Dokument::class, ['antrag_id' => 'id']);
     }
 
