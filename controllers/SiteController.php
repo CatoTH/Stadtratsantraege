@@ -14,6 +14,8 @@ class SiteController extends Controller
     /**
      * @param int $sort
      * @param int $sort_desc
+     * @param int $zeitraum_jahre
+     * @param int $aenderungsantraege
      *
      * @return string
      */
