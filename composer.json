@@ -16,8 +16,8 @@
   "homepage": "https://www.hoessl.eu.de/",
   "require": {
     "php": ">=7.0.0",
-    "fxp/composer-asset-plugin": "~1.0.3",
-    "yiisoft/yii2": "2.0.6",
+    "fxp/composer-asset-plugin": "~1.1.0",
+    "yiisoft/yii2": "2.0.7",
     "slm/mail": "*",
     "tijsverkoyen/css-to-inline-styles": "*",
     "bower-asset/eonasdan-bootstrap-datetimepicker": "4.17.*",

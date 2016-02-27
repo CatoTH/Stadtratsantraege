@@ -60,7 +60,7 @@ class Mandrill
             $converter->setCleanup(false);
             $converter->setExcludeMediaQueries(true);
             $contentHtml = $converter->convert();
-            $contentHtml = preg_replace("/ data\-[a-z0-9_-]+=\"[^\"]*\"/siu", "", $contentHtml);
+            $contentHtml = preg_replace("/ data\\-[a-z0-9_-]+=\"[^\"]*\"/siu", "", $contentHtml);
 
             $textPart          = new \Zend\Mime\Part($plain);
             $textPart->type    = 'text/plain';
@@ -173,7 +173,7 @@ class Mandrill
         }
 
         if (YII_ENV == 'test') {
-            \yii::$app->session->setFlash('email', 'E-Mail sent to: ' . $toEmail);
+            \Yii::$app->session->setFlash('email', 'E-Mail sent to: ' . $toEmail);
         }
     }
 }

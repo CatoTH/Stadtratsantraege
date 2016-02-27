@@ -23,7 +23,7 @@ class SiteController extends Controller
         if (!$aenderungsantraege || $zeitraum_jahre > 0) {
             $where = ' WHERE';
             if ($zeitraum_jahre > 0) {
-                $where .= ' gestellt_am > NOW() - INTERVAL ' . IntVal($zeitraum_jahre) . ' YEAR';
+                $where .= ' gestellt_am > NOW() - INTERVAL ' . intval($zeitraum_jahre) . ' YEAR';
             }
             if ($zeitraum_jahre > 0 && !$aenderungsantraege) {
                 $where .= ' AND';
@@ -83,8 +83,8 @@ class SiteController extends Controller
      */
     public function actionAddantrag()
     {
-        \yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        \yii::$app->response->headers->add('Content-Type', 'application/json');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        \Yii::$app->response->headers->add('Content-Type', 'application/json');
 
         if (!isset($_POST['antrag'])) {
             return json_encode(['error' => 'no data']);
@@ -179,8 +179,8 @@ class SiteController extends Controller
      */
     public function actionDelantrag()
     {
-        \yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        \yii::$app->response->headers->add('Content-Type', 'application/json');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        \Yii::$app->response->headers->add('Content-Type', 'application/json');
 
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne($_POST['antrag_id']);

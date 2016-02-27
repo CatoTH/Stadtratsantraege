@@ -24,7 +24,7 @@ class NotificationController extends Controller
         $abgelaufenStr = $verlaengertStr = '';
 
         /** @var Antrag[] $antraege */
-        $antraege = Antrag::find()->where(Antrag::getAbgelaufenSql())->all();
+        $antraege = Antrag::getAbgelaufene();
         foreach ($antraege as $antrag) {
             $abgelaufen[] = $antrag;
             if ($abgelaufenStr == '') {
