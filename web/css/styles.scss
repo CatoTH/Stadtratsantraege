@@ -6,6 +6,10 @@ $icon-font-path: "/fonts/";
 @import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css";
 @import "../js/bower/bower-asset/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
+body {
+  background-image: url(/noisy-texture.png);
+}
+
 #main-content {
   width: 100%;
   padding: 20px;
@@ -13,42 +17,74 @@ $icon-font-path: "/fonts/";
 
 #antragsliste {
   width: 100%;
-  table-layout: fixed;
-  border: solid 1px #88D959;
-  border-radius: 5px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 
-  a, a:link, a:visited {
-    color: darken(#337ab7, 7%);
+  .adder-row {
+    .titel-input {
+      width: 400px;
+    }
+    .typen-input {
+      float: right;
+    }
   }
 
-  th, td {
-    text-align: left;
-    padding: 5px;
-    vertical-align: top;
-  }
+  > li {
+    padding: 0;
+    border: solid 1px #88D959;
+    border-radius: 5px;
+    margin: 1px 1px 20px;
+    -webkit-box-shadow: 3px 3px 0px 0px rgba(136, 217, 89, 0.1);
+    -moz-box-shadow: 3px 3px 0px 0px rgba(136, 217, 89, 0.1);
+    box-shadow: 3px 3px 0px 0px rgba(136, 217, 89, 0.1);
 
-  > thead {
-    background-color: #88D959;
-  }
+    .titelRow {
+      background-color: #88D959;
+      padding: 3px;
+      @include clearfix;
 
-  th.title {
-    width: 30%;
-  }
+      a.title, a.title:link, a.title:visited {
+        display: inline-block;
+        margin-right: 15px;
+        font-weight: bold;
+        color: black;
+      }
 
-  th.antragstellerin {
-    width: 14%;
-  }
+      .dokumentLink {
+        &, &:link, &:visited {
+          color: gray;
+          margin-left: -8px;
+          margin-right: 15px;
+        }
+        &:hover {
+          text-decoration: underline;
+        }
+      }
 
-  th.antragsdatum {
-    width: 200px;
-  }
+      .titleAdd {
+        float: right;
+      }
 
-  th.status {
-    width: 19%;
-  }
+    }
 
-  th.aktion {
-    width: 50px;
+    &.abgelaufen .titelRow:before {
+      content: '!';
+      font-weight: bold;
+      font-size: 40px;
+      line-height: 20px;
+      vertical-align: middle;
+      margin-right: 10px;
+      float: left;
+      color: red;
+      margin-top: 3px;
+      margin-bottom: 3px;
+    }
+
+    .body {
+      background-color: white;
+      @include clearfix;
+    }
   }
 
   .sort_link {
@@ -64,61 +100,31 @@ $icon-font-path: "/fonts/";
     }
   }
 
-  tbody tr:nth-child(even) td {
-    background-color: #E1F6D5;
-  }
-
-  tbody tr.abgelaufen td.titelRow:before {
-    content: '!';
-    font-weight: bold;
-    font-size: 200%;
-    line-height: 20px;
-    vertical-align: middle;
-    margin-right: 10px;
-    float: left;
-    margin-top: 25px;
-  }
-
-  td.titelRow {
-    .typ {
-      color: gray;
+  .antragsdatumCol {
+    dl {
+      margin-bottom: 0;
+      margin-left: 7px;
     }
-    a {
-      font-weight: bold;
-    }
-  }
-
-  td.antragsdatum {
     dd, dt {
       display: inline-block;
-      font-size: 13px;
+      margin-top: 3px;
     }
     dt {
-      width: 60px;
+      width: 90px;
       font-weight: normal;
     }
     .datum-label {
       float: left;
       line-height: 33px;
       margin-right: 5px;
-      width: 50px;
+      width: 80px;
     }
   }
 
-  td.aktion {
-    text-align: center;
+  .aktionCol {
+    text-align: right;
     .saved {
       font-size: 10px;
-    }
-    .del-button {
-      margin-top: 10px;
-      color: red;
-      display: none;
-    }
-    &:hover {
-      .del-button {
-        display: inherit;
-      }
     }
   }
 
@@ -126,12 +132,19 @@ $icon-font-path: "/fonts/";
     color: gray;
   }
 
-  td.tags {
+  .tagsCol {
     padding-bottom: 0;
+    padding-top: 3px;
+  }
+
+  .notizCol {
+    padding-top: 3px;
   }
 
   textarea {
     width: 100%;
+    min-height: 60px;
+    font-size: 13px;
   }
 
   .bootstrap-tagsinput .label {
@@ -139,6 +152,51 @@ $icon-font-path: "/fonts/";
     font-weight: normal;
   }
 
+  .abgeschlossen_override {
+    float: right;
+    font-weight: normal;
+    font-size: 0.9em;
+    vertical-align: middle;
+    color: gray;
+
+    input {
+      vertical-align: middle;
+      margin-top: 1px;
+    }
+  }
+
+  .overridden {
+    text-decoration: line-through;;
+    color: gray;
+  }
+
+  .dokumentStatusCol {
+    padding-top: 3px;
+  }
+
+  ul.dokumentliste {
+    list-style-type: none;
+    margin: 10px 0 0;
+    padding: 0;
+    font-size: 13px;
+    li {
+      margin: 0;
+      padding: 0;
+      color: gray;
+    }
+  }
+}
+
+.sort-row {
+  margin-top: -27px;
+  text-align: right;
+  display: block;
+  margin-right: 4px;
+
+  > li {
+    display: inline-block;
+    margin: 0 20px 0 0;
+  }
 }
 
 #filterWidget {
@@ -150,7 +208,7 @@ $icon-font-path: "/fonts/";
 
 .zeitraumFilter {
   padding: 10px;
-  background: #f7f7f7;
+  background: #fafafa;
   border-bottom: solid 1px #ccc;
   margin: -20px -20px 20px;
   overflow: auto;

@@ -15,7 +15,7 @@ use yii\db\ActiveRecord;
  * @property int $status
  * @property string $error
  */
-class EMail extends ActiveRecord
+class Email extends ActiveRecord
 {
     const STATUS_SENT              = 0;
     const STATUS_SKIPPED_BLACKLIST = 1;

@@ -1,20 +1,5 @@
--- phpMyAdmin SQL Dump
--- version 4.5.3.1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jan 23, 2016 at 01:46 PM
--- Server version: 5.7.10
--- PHP Version: 7.0.2-1~dotdeb+8.1
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
---
--- Database: `stadtratsantraege`
---
-
--- --------------------------------------------------------
 
 --
 -- Table structure for table `antraege`
@@ -68,6 +53,20 @@ CREATE TABLE `antraege_stadtraetinnen` (
 CREATE TABLE `antraege_tags` (
   `antrag_id` int(11) NOT NULL,
   `tag_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dokumente`
+--
+
+CREATE TABLE `dokumente` (
+  `dokument_id` int(11) NOT NULL,
+  `antrag_id` int(11) NOT NULL,
+  `url` varchar(200) NOT NULL,
+  `datum` timestamp NULL,
+  `titel` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -127,6 +126,13 @@ ALTER TABLE `antraege_tags`
   ADD KEY `tag_id` (`tag_id`);
 
 --
+-- Indexes for table `dokumente`
+--
+ALTER TABLE `dokumente`
+  ADD PRIMARY KEY (`dokument_id`),
+  ADD KEY `antrag_id` (`antrag_id`);
+
+--
 -- Indexes for table `stadtraetinnen`
 --
 ALTER TABLE `stadtraetinnen`
@@ -148,12 +154,12 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for table `antraege`
 --
 ALTER TABLE `antraege`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1832;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1844;
 --
 -- AUTO_INCREMENT for table `stadtraetinnen`
 --
 ALTER TABLE `stadtraetinnen`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 --
 -- AUTO_INCREMENT for table `tags`
 --
@@ -176,3 +182,9 @@ ALTER TABLE `antraege_stadtraetinnen`
 ALTER TABLE `antraege_tags`
   ADD CONSTRAINT `antraege_tags_ibfk_1` FOREIGN KEY (`antrag_id`) REFERENCES `antraege` (`id`),
   ADD CONSTRAINT `antraege_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`);
+
+--
+-- Constraints for table `dokumente`
+--
+ALTER TABLE `dokumente`
+  ADD CONSTRAINT `dokumente_ibfk_1` FOREIGN KEY (`antrag_id`) REFERENCES `antraege` (`id`);

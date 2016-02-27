@@ -38,7 +38,7 @@ $sortTitle = function ($titel, $curr_sort, $curr_desc, $my_sort, $default_desc, 
             $text = '<span class="sort_hidden"><span class="glyphicon glyphicon-chevron-up"></span></span> ' . $titel . '</span>';
         }
     }
-    echo Html::a($text, $url, ['class' => 'sort_link']);
+    echo '<li>' . Html::a($text, $url, ['class' => 'sort_link']) . '</li>';
 };
 
 echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
@@ -59,25 +59,16 @@ echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
         <?php echo $this->render('index_filterwidget'); ?>
     </div>
 
+<ul class="sort-row">
+    <?php
+    $sortTitle('Titel', $sort, $sort_desc, Antrag::SORT_TITEL, 0, $zeitraum_jahre, $aenderungsantraege);
+    $sortTitle('Frist/Verlängerung', $sort, $sort_desc, Antrag::SORT_DATUM_FRIST, 1, $zeitraum_jahre, $aenderungsantraege);
+    $sortTitle('Antragsdatum', $sort, $sort_desc, Antrag::SORT_DATUM_ANTRAG, 1, $zeitraum_jahre, $aenderungsantraege);
+    $sortTitle('Status', $sort, $sort_desc, Antrag::SORT_STATUS, 0, $zeitraum_jahre, $aenderungsantraege);
+    ?>
+</ul>
 
-    <table id="antragsliste">
-        <thead>
-        <tr>
-            <th class="title"><?php
-                $sortTitle('Titel', $sort, $sort_desc, Antrag::SORT_TITEL, 0, $zeitraum_jahre, $aenderungsantraege);
-                ?></th>
-            <th class="antragstellerin">Antragsteller*in</th>
-            <th class="antragsdatum"><?php
-                $sortTitle('Datum', $sort, $sort_desc, Antrag::SORT_DATUM, 1, $zeitraum_jahre, $aenderungsantraege);
-                ?></th>
-            <th class="status"><?php
-                $sortTitle('Status', $sort, $sort_desc, Antrag::SORT_STATUS, 0, $zeitraum_jahre, $aenderungsantraege);
-                ?></th>
-            <th class="themen">Themen</th>
-            <th class="aktion"></th>
-        </tr>
-        </thead>
-        <tbody>
+    <ul id="antragsliste">
         <?php
         echo $this->render('index_adder_row', ['stadtraetinnen' => $stadtraetinnen_alle]);
         foreach ($antraege as $antrag) {
@@ -85,8 +76,7 @@ echo Html::beginForm('', 'post', ['class' => 'antrag-form']);
         }
         ?>
 
-        </tbody>
-    </table>
+    </ul>
 
 <?php
 echo Html::endForm();

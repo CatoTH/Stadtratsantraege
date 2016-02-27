@@ -19,13 +19,13 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($sort = Antrag::SORT_DATUM, $sort_desc = 1, $zeitraum_jahre = 2, $aenderungsantraege = 0)
+    public function actionIndex($sort = Antrag::SORT_DATUM_FRIST, $sort_desc = 1, $zeitraum_jahre = 2, $aenderungsantraege = 0)
     {
         $where = '';
         if (!$aenderungsantraege || $zeitraum_jahre > 0) {
             $where = ' WHERE';
             if ($zeitraum_jahre > 0) {
-                $where .= ' gestellt_am > NOW() - INTERVAL ' . IntVal($zeitraum_jahre) . ' YEAR';
+                $where .= ' gestellt_am > NOW() - INTERVAL ' . intval($zeitraum_jahre) . ' YEAR';
             }
             if ($zeitraum_jahre > 0 && !$aenderungsantraege) {
                 $where .= ' AND';
@@ -36,7 +36,7 @@ class SiteController extends Controller
         }
 
 
-        if ($sort == Antrag::SORT_DATUM) {
+        if ($sort == Antrag::SORT_DATUM_FRIST) {
             $sql = 'SELECT *, IF (fristverlaengerung > bearbeitungsfrist, fristverlaengerung, bearbeitungsfrist) frist FROM antraege' . $where;
 
             $sql .= ' ORDER BY frist';
@@ -46,6 +46,12 @@ class SiteController extends Controller
             $antraege = Antrag::findBySql($sql)->all();
         } elseif ($sort == Antrag::SORT_TITEL) {
             $sql = 'SELECT * FROM antraege' . $where . ' ORDER BY titel';
+            if ($sort_desc) {
+                $sql .= ' DESC';
+            }
+            $antraege = Antrag::findBySql($sql)->all();
+        } elseif ($sort == Antrag::SORT_DATUM_ANTRAG) {
+            $sql = 'SELECT * FROM antraege' . $where . ' ORDER BY gestellt_am';
             if ($sort_desc) {
                 $sql .= ' DESC';
             }
@@ -79,8 +85,8 @@ class SiteController extends Controller
      */
     public function actionAddantrag()
     {
-        \yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        \yii::$app->response->headers->add('Content-Type', 'application/json');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        \Yii::$app->response->headers->add('Content-Type', 'application/json');
 
         if (!isset($_POST['antrag'])) {
             return json_encode(['error' => 'no data']);
@@ -142,6 +148,11 @@ class SiteController extends Controller
         }
 
         $antrag->notiz = $_POST['antrag']['notiz'];
+        if ($_POST['antrag']['abgeschlossen'] == 1) {
+            $antrag->status_override = ($antrag->status == 'erledigt' ? '' : 'erledigt');
+        } else {
+            $antrag->status_override = ($antrag->status == 'erledigt' ? 'In Bearbeitung' : '');
+        }
         if (!$antrag->save()) {
             return json_encode(['error' => 'Es ist ein (seltsamer) Fehler beim Speichern aufgetreten.']);
         }
@@ -170,8 +181,8 @@ class SiteController extends Controller
      */
     public function actionDelantrag()
     {
-        \yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
-        \yii::$app->response->headers->add('Content-Type', 'application/json');
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        \Yii::$app->response->headers->add('Content-Type', 'application/json');
 
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne($_POST['antrag_id']);

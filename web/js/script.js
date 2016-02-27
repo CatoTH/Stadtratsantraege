@@ -39,20 +39,20 @@ jQuery(function () {
 
     var scrolled = false,
         onScrollFunc = function () {
-            var $trs = $antragsliste.find("> tbody > tr:visible"),
+            var $lis = $antragsliste.find("> li:visible"),
                 foundVisible = false,
                 foundInvisibleAfterVisible = false;
-            for (var i = 0; i < $trs.length && !foundInvisibleAfterVisible; i++) {
-                var $tr = $($trs[i]),
-                    visible = $tr.is(":in-viewport");
+            for (var i = 0; i < $lis.length && !foundInvisibleAfterVisible; i++) {
+                var $li = $($lis[i]),
+                    visible = $li.is(":in-viewport");
                 if (visible) {
                     foundVisible = true;
                 } else if (foundVisible) {
                     foundInvisibleAfterVisible = true;
                 }
-                if (!$tr.data("entertags_inited")) {
-                    $tr.data("entertags_inited", "1");
-                    $tr.find('.entertags').tagsinput({
+                if (!$li.data("entertags_inited")) {
+                    $li.data("entertags_inited", "1");
+                    $li.find('.entertags').tagsinput({
                         typeaheadjs: {
                             name: 'tagnames',
                             displayKey: 'name',
@@ -83,21 +83,21 @@ jQuery(function () {
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
 
-        $("#antragsliste").find("tbody tr").each(function () {
-            var $tr = $(this),
+        $("#antragsliste").find("> li").each(function () {
+            var $li = $(this),
                 matchAll = true;
-            if ($tr.hasClass("adder-row")) return;
-            if (initiator >= 0 && !$tr.hasClass("stadtraetin_" + initiator)) matchAll = false;
-            if (thema >= 0 && !$tr.hasClass("thema_" + thema)) matchAll = false;
-            if (status >= 0 && !$tr.hasClass("status_" + status)) matchAll = false;
-            if (abgelaufen && !$tr.hasClass("abgelaufen")) matchAll = false;
-            if (typ >= 0 && !$tr.hasClass("typ_" + typ)) matchAll = false;
-            if (titel != '' && $tr.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) == -1) matchAll = false;
+            if ($li.hasClass("adder-row")) return;
+            if (initiator >= 0 && !$li.hasClass("stadtraetin_" + initiator)) matchAll = false;
+            if (thema >= 0 && !$li.hasClass("thema_" + thema)) matchAll = false;
+            if (status >= 0 && !$li.hasClass("status_" + status)) matchAll = false;
+            if (abgelaufen && !$li.hasClass("abgelaufen")) matchAll = false;
+            if (typ >= 0 && !$li.hasClass("typ_" + typ)) matchAll = false;
+            if (titel != '' && $li.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) == -1) matchAll = false;
 
             if (matchAll) {
-                $tr.show();
+                $li.show();
             } else {
-                $tr.hide();
+                $li.hide();
             }
         });
     };
@@ -115,7 +115,7 @@ jQuery(function () {
         $adderRow.removeClass('hidden');
         $adderRow.find("input").first().focus();
     });
-    $('.adder-row .aktion button').click(function () {
+    $('.adder-row .aktionCol button').click(function () {
         var $adderRow = $('.adder-row'),
             data = {},
             params = {};
@@ -153,12 +153,13 @@ jQuery(function () {
 
 
     $antragsliste.on('click', '.save-button', function () {
-        var $row = $(this).parents("tr").first(),
+        var $row = $(this).parents("li").first(),
             data = {},
             params = {};
 
         data['tags'] = $row.find(".entertags").val();
         data['notiz'] = $row.find("textarea[name=notiz]").val();
+        data['abgeschlossen'] = ($row.find("input[name=abgeschlossen]").prop("checked") ? 1 : 0);
 
         params['antrag'] = data;
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
@@ -186,11 +187,11 @@ jQuery(function () {
                 }
             });
 
-            $newRow.find(".aktion button").addClass("hidden");
-            $newRow.find(".aktion .saved").removeClass("hidden");
+            $newRow.find(".aktionCol button").addClass("hidden");
+            $newRow.find(".aktionCol .saved").removeClass("hidden");
             window.setTimeout(function () {
-                $newRow.find(".aktion button").removeClass("hidden");
-                $newRow.find(".aktion .saved").addClass("hidden");
+                $newRow.find(".aktionCol button").removeClass("hidden");
+                $newRow.find(".aktionCol .saved").addClass("hidden");
             }, 1000);
         });
     });
@@ -199,7 +200,7 @@ jQuery(function () {
         if (!window.confirm("Diesen Antrag wirklich löschen?")) {
             return;
         }
-        var $row = $(this).parents("tr").first(),
+        var $row = $(this).parents("li").first(),
             params = {};
         params['antrag_id'] = $row.data("antrag-id");
         params[$("head meta[name=csrf-param]").attr("content")] = $("head meta[name=csrf-token]").attr("content");
