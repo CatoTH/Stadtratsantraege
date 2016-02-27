@@ -2,6 +2,7 @@
 
 namespace app\commands;
 
+use app\components\HtmlTools;
 use app\components\Mandrill;
 use app\models\Antrag;
 use yii\console\Controller;
@@ -53,9 +54,9 @@ class NotificationController extends Controller
             $verlaengertStr .= "- " . str_replace("\n", "", $antrag->titel) . "\n";
             $verlaengertStr .= "  https://www.muenchen-transparent.de/antraege/" . $antrag->ris_id . "\n";
             $verlaengertStr .= "  Status: " . $antrag->status . "\n";
-            $verlaengertStr .= "  Gestellt am: " . $antrag->gestellt_am . "\n";
-            $verlaengertStr .= "  Ursprüngliche Frist: " . $antrag->bearbeitungsfrist . "\n";
-            $verlaengertStr .= "  Neue (verlängerte) Frist: " . $antrag->fristverlaengerung . "\n\n";
+            $verlaengertStr .= "  Gestellt am: " . HtmlTools::formatDate($antrag->gestellt_am) . "\n";
+            $verlaengertStr .= "  Ursprüngliche Frist: " . HtmlTools::formatDate($antrag->bearbeitungsfrist) . "\n";
+            $verlaengertStr .= "  Neue (verlängerte) Frist: " . HtmlTools::formatDate($antrag->fristverlaengerung) . "\n\n";
         }
 
         if (count($abgelaufen) == 0 && count($verlaengert) == 0) {
