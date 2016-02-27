@@ -2,6 +2,21 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 --
+-- Table structure for table `email`
+--
+
+CREATE TABLE `email` (
+  `id` int(11) NOT NULL,
+  `toEmail` varchar(200) DEFAULT NULL,
+  `dateSent` timestamp NULL DEFAULT NULL,
+  `subject` varchar(200) DEFAULT NULL,
+  `text` mediumtext,
+  `messageId` varchar(100) NOT NULL,
+  `status` smallint(6) NOT NULL,
+  `error` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
 -- Table structure for table `antraege`
 --
 
@@ -98,6 +113,12 @@ CREATE TABLE `tags` (
 --
 
 --
+-- Indexes for table `email`
+--
+ALTER TABLE `email`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `antraege`
 --
 ALTER TABLE `antraege`
@@ -150,6 +171,11 @@ ALTER TABLE `tags`
 -- AUTO_INCREMENT for dumped tables
 --
 
+--
+-- AUTO_INCREMENT for table `email`
+--
+ALTER TABLE `email`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `antraege`
 --
