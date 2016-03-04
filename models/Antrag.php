@@ -168,7 +168,7 @@ class Antrag extends ActiveRecord
     {
         $sql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
             'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
-            'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "") ' .
+            'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "erledigt") ' .
             'AND bearbeitungsfrist_benachrichtigung IS NULL';
 
         return Antrag::find()->where($sql)->all();
