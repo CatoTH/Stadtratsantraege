@@ -1,8 +1,8 @@
 {
   "name": "catoth/str_antraege",
-  "description": "Antragsgrün",
+  "description": "Stadtratsanträge",
   "type": "project",
-  "license": "Proprietary",
+  "license": "AGPL-3.0",
   "support": {
     "issues": "https://github.com/CatoTH/str_antraege/issues",
     "source": "https://github.com/CatoTH/str_antraege"
@@ -13,11 +13,11 @@
     "netzbegruenung"
   ],
   "minimum-stability": "dev",
-  "homepage": "https://www.hoessl.eu.de/",
+  "homepage": "https://www.hoessl.eu/",
   "require": {
     "php": ">=7.0.0",
-    "fxp/composer-asset-plugin": "~1.1.0",
-    "yiisoft/yii2": "2.0.7",
+    "fxp/composer-asset-plugin": "~1.3.1",
+    "yiisoft/yii2": "2.0.13.1",
     "slm/mail": "*",
     "tijsverkoyen/css-to-inline-styles": "*",
     "bower-asset/eonasdan-bootstrap-datetimepicker": "4.17.*",
@@ -27,7 +27,7 @@
     "bower-asset/jquery": "*"
   },
   "require-dev": {
-    "yiisoft/yii2-debug": "2.0.5"
+    "yiisoft/yii2-debug": "^2.0.12"
   },
   "extra": {
     "yii\\composer\\Installer::postCreateProject": {
