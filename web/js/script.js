@@ -92,7 +92,7 @@ jQuery(function () {
             if (status >= 0 && !$li.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$li.hasClass("abgelaufen")) matchAll = false;
             if (typ >= 0 && !$li.hasClass("typ_" + typ)) matchAll = false;
-            if (titel != '' && $li.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) == -1) matchAll = false;
+            if (titel !== '' && $li.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) === -1) matchAll = false;
 
             if (matchAll) {
                 $li.show();
@@ -130,11 +130,11 @@ jQuery(function () {
             data['stadtraetinnen'].push($(this).val());
         });
         var gestellt_am = $adderRow.find("input[name=gestellt_am]").val().split(".");
-        if (gestellt_am.length == 3) {
+        if (gestellt_am.length === 3) {
             data['gestellt_am'] = gestellt_am[2] + '-' + gestellt_am[1] + '-' + gestellt_am[0];
         }
         var frist = $adderRow.find("input[name=bearbeitungsfrist]").val().split(".");
-        if (frist.length == 3) {
+        if (frist.length === 3) {
             data['bearbeitungsfrist'] = frist[2] + '-' + frist[1] + '-' + frist[0];
         }
 

@@ -1,3 +1,4 @@
-web/fuelux-* linguist-vendored
+web/fuelux-3.16.3/* linguist-vendored
 web/css/bootstrap/* linguist-vendored
-web/bootstrap-* linguist-vendored
+web/bootstrap-tagsinput/* linguist-vendored
+web/js/bower/* linguist-vendored

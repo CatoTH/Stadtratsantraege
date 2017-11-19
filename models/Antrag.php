@@ -155,9 +155,9 @@ class Antrag extends ActiveRecord
     public function istErledigt()
     {
         if ($this->status_override == '') {
-            return ($this->status == 'erledigt');
+            return (strtolower($this->status) == 'erledigt');
         } else {
-            return ($this->status_override == 'erledigt');
+            return (strtolower($this->status_override) == 'erledigt');
         }
     }
 
