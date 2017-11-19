@@ -3,7 +3,7 @@ jQuery(function () {
         $adderRow = $('.adder-row');
 
     $('.selectlist').selectlist();
-    $('.checkbox').checkbox();
+    $('.checkbox-custom').checkbox();
 
 
     $('.antrag_datum').datetimepicker({
