@@ -1,10 +1,10 @@
 $icon-font-path: "/fonts/";
 
 @import "bootstrap";
-@import "../fuelux-3.13.0/dist/css/fuelux.min.css";
+@import "../fuelux-3.16.3/dist/css/fuelux.min.css";
 @import "../bootstrap-tagsinput/bootstrap-tagsinput.css";
 @import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css";
-@import "../js/bower/bower-asset/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
+@import "../js/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
 body {
   background-image: url(/noisy-texture.png);
