@@ -69,7 +69,7 @@ use yii\helpers\Url;
                     <input type="checkbox" name="neu[stadtraetIn][]" value="<?= $stadtraetin->id ?>">
                     <?= Html::encode($name[0]) ?>
                 </label>
-            <? } ?>
+            <?php } ?>
         </div>
 
         <div class="notizCol col-md-3">

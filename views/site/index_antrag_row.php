@@ -61,7 +61,7 @@ foreach ($antrag->dokumente as $dokument) {
     <div class="titelRow">
         <span class="glyphicon glyphicon-chevron-right"></span>
         <a href="<?= Html::encode($link) ?>" target="_blank" class="title"><?= Html::encode($antrag->titel) ?></a>
-        <?
+        <?php
         if ($originaldokument) {
             echo Html::a('<span class="glyphicon glyphicon-file"></span>', $originaldokument->url, ['class' => 'dokumentLink']);
         }
@@ -70,7 +70,7 @@ foreach ($antrag->dokumente as $dokument) {
                 <span class="typ"><?= Html::encode($typ_name) ?></span> von
                 <span class="stadtraetinnen"><?= implode(', ', $stadtraetinnen) ?></span>
             </div>
-        <? } ?>
+        <?php } ?>
     </div>
     <div class="body">
         <div class="antragsdatumCol col-md-2">
@@ -97,7 +97,7 @@ foreach ($antrag->dokumente as $dokument) {
             <div class="status">
                 <label class="abgeschlossen_override">
                     <span>Abgeschlossen</span>
-                    <input type="checkbox" name="abgeschlossen" <? if ($antrag->istErledigt()) {
+                    <input type="checkbox" name="abgeschlossen" <?php if ($antrag->istErledigt()) {
                         echo 'checked';
                     } ?>>
                 </label>
@@ -122,7 +122,7 @@ foreach ($antrag->dokumente as $dokument) {
             </ul>
         </div>
         <div class="notizCol col-md-3 col-md-offset-1">
-        <textarea placeholder="Notiz, aktueller Stand" name="notiz" class="form-control"><?
+        <textarea placeholder="Notiz, aktueller Stand" name="notiz" class="form-control"><?php
             echo Html::encode($antrag->notiz);
             ?></textarea>
         </div>
