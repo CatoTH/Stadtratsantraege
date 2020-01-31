@@ -4,3 +4,4 @@ runtime/*
 config/db.php
 config/params.php
 .idea
+node_modules

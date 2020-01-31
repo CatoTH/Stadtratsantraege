@@ -21,16 +21,14 @@ $this->beginPage();
 
     <link rel="stylesheet" href="/css/styles.css">
 
-    <script src="/js/bower/html5shiv/dist/html5shiv.min.js"></script>
-    <script src="/js/bower/es5-shim/es5-shim.js"></script>
-    <script src="/js/bower/jquery/dist/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.viewport.js"></script>
-    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="/fuelux-3.16.3/dist/js/fuelux.min.js"></script>
-    <script src="/js/bower/typeahead.js/dist/typeahead.bundle.js"></script>
+    <script src="/js/typeahead.bundle.min.js"></script>
     <script src="bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
-    <script src="/js/bower/moment/min/moment-with-locales.js"></script>
-    <script src="/js/bower/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/js/moment-with-locales.min.js"></script>
+    <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/script.js"></script>
 </head>
 <body>
