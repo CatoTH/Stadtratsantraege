@@ -24,9 +24,10 @@ class ImportController extends Controller
         /** @var Antrag $antrag */
         $antrag = Antrag::findOne(['ris_id' => $antragData['id']]);
         if (!$antrag) {
-            $antrag         = new Antrag();
-            $antrag->ris_id = $antragData['id'];
-            $antrag->notiz  = '';
+            $antrag                  = new Antrag();
+            $antrag->ris_id          = $antragData['id'];
+            $antrag->notiz           = '';
+            $antrag->status_override = '';
         } else {
             if ($antrag->status != $antragData['status']) {
                 $antrag->notiz = date("d.m.Y.") . ": Status: " . $antrag->status . " -> " . $antragData['status'] . "\n" . trim($antrag->notiz);
