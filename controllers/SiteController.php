@@ -9,6 +9,7 @@ use yii\web\Controller;
 
 class SiteController extends Controller
 {
+
     public $layout = '@app/views/layouts/main';
 
     /**
@@ -105,12 +106,11 @@ class SiteController extends Controller
         $antrag->antrags_nr         = '';
         $antrag->save();
 
-        $tags = explode(',', $data['tags']);
-        foreach ($tags as $tagName) {
-            $tag = Tag::findOne(['name' => $tagName]);
+        if ($data['tag'] !== '') {
+            $tag = Tag::findOne(['name' => $data['tag']]);
             if (!$tag) {
                 $tag       = new Tag();
-                $tag->name = $tagName;
+                $tag->name = $data['tag'];
                 $tag->save();
             }
             $antrag->link('tags', $tag);
@@ -160,12 +160,11 @@ class SiteController extends Controller
         foreach ($antrag->tags as $tag) {
             $antrag->unlink('tags', $tag, true);
         }
-        $tags = explode(',', $_POST['antrag']['tags']);
-        foreach ($tags as $tagName) {
-            $tag = Tag::findOne(['name' => $tagName]);
+        if ($_POST['antrag']['tag'] !== '') {
+            $tag = Tag::findOne(['name' => $_POST['antrag']['tag']]);
             if (!$tag) {
                 $tag       = new Tag();
-                $tag->name = $tagName;
+                $tag->name = $_POST['antrag']['tag'];
                 $tag->save();
             }
             $antrag->link('tags', $tag);

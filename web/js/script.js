@@ -121,7 +121,7 @@ jQuery(function () {
             params = {};
 
         data['titel'] = $adderRow.find("input[name=titel]").val();
-        data['tags'] = $adderRow.find(".entertags").val();
+        data['tag'] = $adderRow.find(".tagsCol select").val();
         data['notiz'] = $adderRow.find("textarea[name=notiz]").val();
         data['typ'] = $adderRow.find("input[name=typ]").val();
         data['status'] = $adderRow.find("input[name=status]").val();
@@ -157,7 +157,7 @@ jQuery(function () {
             data = {},
             params = {};
 
-        data['tags'] = $row.find(".entertags").val();
+        data['tag'] = $row.find(".tagsCol select").val();
         data['notiz'] = $row.find("textarea[name=notiz]").val();
         data['abgeschlossen'] = ($row.find("input[name=abgeschlossen]").prop("checked") ? 1 : 0);
 

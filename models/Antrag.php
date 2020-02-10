@@ -1,4 +1,5 @@
 <?php
+
 namespace app\models;
 
 use yii\db\ActiveRecord;
@@ -28,9 +29,9 @@ use yii\db\ActiveRecord;
  */
 class Antrag extends ActiveRecord
 {
-    const SORT_DATUM_FRIST  = 0;
-    const SORT_TITEL        = 1;
-    const SORT_STATUS       = 2;
+    const SORT_DATUM_FRIST = 0;
+    const SORT_TITEL = 1;
+    const SORT_STATUS = 2;
     const SORT_DATUM_ANTRAG = 3;
 
     public static $STATI = [
@@ -49,6 +50,55 @@ class Antrag extends ActiveRecord
         3 => 'Aenderungsantrag',
     ];
 
+    public static $THEMEN = [
+        'Abfallwirtschaft',
+        'Arbeit und Wirtschaft',
+        'Artenschutz',
+        'Bau',
+        'Berufliche Bildung',
+        'Beschaffung / Fairtrade',
+        'Bildung Allgemein',
+        'Bürgerschaftliches Engagement',
+        'Datenschutz',
+        'Demokratie / Bürgerbeteiligung',
+        'Energie',
+        'Ernährung',
+        'Europa / Internationales',
+        'Finanzen',
+        'Flucht / Asyl',
+        'Fußverkehr',
+        'Gender / Frauen',
+        'Gesundheit',
+        'IT/Digitales',
+        'Inklusion',
+        'KiTa',
+        'Kinder / Jugend',
+        'Klimaschutz',
+        'Kommunale Beschäftigung',
+        'Kommunales',
+        'Kultur',
+        'Luft',
+        'Lärm',
+        'MIV',
+        'Migration',
+        'Naturschutz',
+        'Öffentliche Sicherheit',
+        'Öffentlicher Raum',
+        'ÖPNV',
+        'Planung / Stadtentwicklung',
+        'Radverkehr',
+        'Rechtsextremismus',
+        'Schule',
+        'Senior*innen',
+        'Sexuelle Identität',
+        'Soziales',
+        'Sport',
+        'Verkehr Allgemein',
+        'Verwaltung/Personal',
+        'Wohnen',
+        'Wohnungslosigkeit',
+    ];
+
     /**
      * @return string
      */
@@ -63,7 +113,7 @@ class Antrag extends ActiveRecord
     public function getStadtraetinnen()
     {
         return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
-            ->viaTable('antraege_stadtraetinnen', ['antrag_id' => 'id']);
+                    ->viaTable('antraege_stadtraetinnen', ['antrag_id' => 'id']);
     }
 
     /**
@@ -72,7 +122,7 @@ class Antrag extends ActiveRecord
     public function getInitiatorinnen()
     {
         return $this->hasMany(Stadtraetin::class, ['id' => 'stadtraetin_id'])
-            ->viaTable('antraege_initiatorinnen', ['antrag_id' => 'id']);
+                    ->viaTable('antraege_initiatorinnen', ['antrag_id' => 'id']);
     }
 
     /**
@@ -81,7 +131,7 @@ class Antrag extends ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tag::class, ['id' => 'tag_id'])
-            ->viaTable('antraege_tags', ['antrag_id' => 'id']);
+                    ->viaTable('antraege_tags', ['antrag_id' => 'id']);
     }
 
     /**
@@ -146,6 +196,7 @@ class Antrag extends ActiveRecord
         if ($this->fristverlaengerung != '' && str_replace('-', '', $this->fristverlaengerung) > date('Ymd')) {
             return false;
         }
+
         return !$this->istErledigt();
     }
 
@@ -167,9 +218,9 @@ class Antrag extends ActiveRecord
     public static function getAbgelaufene()
     {
         $sql = 'bearbeitungsfrist <= CURRENT_DATE() ' .
-            'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
-            'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "erledigt") ' .
-            'AND bearbeitungsfrist_benachrichtigung IS NULL';
+               'AND (fristverlaengerung IS NULL OR fristverlaengerung <= CURRENT_DATE()) ' .
+               'AND NOT ((status_override = "" AND status = "erledigt") OR status_override = "erledigt") ' .
+               'AND bearbeitungsfrist_benachrichtigung IS NULL';
 
         return Antrag::find()->where($sql)->all();
     }

@@ -41,7 +41,8 @@ $config = [
             'showScriptName'  => false,
             'enablePrettyUrl' => true,
             'rules'           => [
-                '/' => 'site/index',
+                '/'           => 'site/index',
+                '/saveantrag' => 'site/saveantrag',
             ]
         ],
     ],

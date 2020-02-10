@@ -127,7 +127,18 @@ foreach ($antrag->dokumente as $dokument) {
             ?></textarea>
         </div>
         <div class="tagsCol col-md-3">
-            <input type="text" value="<?= Html::encode(implode(',', $tags)) ?>" class="entertags" title="Themen">
+            <select size="1" autocomplete="off" title="Thema" class="">
+                <option value=""></option>
+                <?php
+                foreach (Antrag::$THEMEN as $thema) {
+                    echo '<option value="' . Html::encode($thema) . '"';
+                    if (in_array($thema, $tags)) {
+                        echo ' selected="selected"';
+                    }
+                    echo '>' . Html::encode($thema) . '</option>';
+                }
+                ?>
+            </select>
         </div>
         <div class="aktionCol col-md-1">
             <br>
