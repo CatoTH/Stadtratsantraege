@@ -7423,6 +7423,10 @@ body {
   padding-bottom: 0;
   padding-top: 3px;
 }
+#antragsliste .tagsCol label {
+  font-weight: normal;
+  color: gray;
+}
 #antragsliste .notizCol {
   padding-top: 3px;
 }

@@ -25,8 +25,8 @@ $this->beginPage();
     <script src="/js/jquery.viewport.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/fuelux-3.16.3/dist/js/fuelux.min.js"></script>
-    <script src="/js/typeahead.bundle.min.js"></script>
-    <script src="bootstrap-tagsinput/bootstrap-tagsinput.js"></script>
+    <!--<script src="/js/typeahead.bundle.min.js"></script>-->
+    <!--<script src="bootstrap-tagsinput/bootstrap-tagsinput.js"></script>-->
     <script src="/js/moment-with-locales.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/script.js"></script>

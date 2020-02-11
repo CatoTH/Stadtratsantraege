@@ -134,6 +134,10 @@ body {
   .tagsCol {
     padding-bottom: 0;
     padding-top: 3px;
+    label {
+      font-weight: normal;
+      color: gray;
+    }
   }
 
   .notizCol {

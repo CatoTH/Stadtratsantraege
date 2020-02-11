@@ -16,7 +16,9 @@ foreach ($antrag->initiatorinnen as $stadtraetin) {
         $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));
         $stadtraetinnen[] = Html::encode($namen[0]);
     } else {
-        $stadtraetinnen[] = '<span class="nicht-fraktion">' . Html::encode($stadtraetin->name) . '</span>';
+        $parts = explode(",", $stadtraetin->name);
+        $name = (count($parts) === 2 ? $parts[1] . ' ' . $parts[0] : $stadtraetin->name);
+        $stadtraetinnen[] = '<span class="nicht-fraktion">' . Html::encode($name) . '</span>';
     }
 }
 usort($stadtraetinnen, function ($name1, $name2) {
@@ -127,7 +129,8 @@ foreach ($antrag->dokumente as $dokument) {
             ?></textarea>
         </div>
         <div class="tagsCol col-md-3">
-            <select size="1" autocomplete="off" title="Thema" class="">
+            <label for="tag_<?= $antrag->id?>">Thema:</label><br>
+            <select size="1" autocomplete="off" title="Thema" class="" id="tag_<?= $antrag->id?>">
                 <option value=""></option>
                 <?php
                 foreach (Antrag::$THEMEN as $thema) {

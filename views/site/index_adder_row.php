@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Antrag;
 use app\models\Stadtraetin;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -14,7 +15,7 @@ use yii\helpers\Url;
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <?php foreach (\app\models\Antrag::$TYPEN as $id => $name) {
+                <?php foreach (Antrag::$TYPEN as $id => $name) {
                     echo '<li data-value="' . Html::encode($id) . '"><a href="#">' . Html::encode($name) . '</a></li>';
                 } ?>
             </ul>
@@ -54,7 +55,7 @@ use yii\helpers\Url;
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <?php foreach (\app\models\Antrag::$STATI as $id => $name) {
+                    <?php foreach (Antrag::$STATI as $id => $name) {
                         echo '<li data-value="' . Html::encode($id) . '"><a href="#">' . Html::encode($name) . '</a></li>';
                     } ?>
                 </ul>
@@ -76,7 +77,15 @@ use yii\helpers\Url;
             <textarea placeholder="Notiz, aktueller Stand" name="notiz" class="form-control"></textarea>
         </div>
         <div class="tagsCol col-md-3">
-            <input type="text" value="" class="entertags" title="Themen">
+            <label for="adder_thema">Thema:</label><br>
+            <select size="1" autocomplete="off" title="Thema" class="" id="adder_thema">
+                <option value=""></option>
+                <?php
+                foreach (Antrag::$THEMEN as $thema) {
+                    echo '<option value="' . Html::encode($thema) . '">' . Html::encode($thema) . '</option>';
+                }
+                ?>
+            </select>
         </div>
         <div class="aktionCol col-md-1">
             <br>

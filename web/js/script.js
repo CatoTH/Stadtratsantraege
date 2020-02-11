@@ -11,20 +11,10 @@ jQuery(function () {
         format: 'L'
     });
 
-
+    /*
     var tagnames = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        /*
-         prefetch: {
-         url: 'assets/citynames.json',
-         filter: function (list) {
-         return $.map(list, function (cityname) {
-         return {name: cityname};
-         });
-         }
-         }
-         */
         local: [
             {"name": "Verkehr"},
             {"name": "Stadtplanung"},
@@ -35,6 +25,7 @@ jQuery(function () {
         ]
     });
     tagnames.initialize();
+     */
 
 
     var scrolled = false,
@@ -50,6 +41,7 @@ jQuery(function () {
                 } else if (foundVisible) {
                     foundInvisibleAfterVisible = true;
                 }
+                /*
                 if (!$li.data("entertags_inited")) {
                     $li.data("entertags_inited", "1");
                     $li.find('.entertags').tagsinput({
@@ -61,6 +53,7 @@ jQuery(function () {
                         }
                     });
                 }
+                 */
             }
 
         };
@@ -83,12 +76,14 @@ jQuery(function () {
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
 
+        console.log(thema, initiator, status, abgelaufen, typ, titel);
+
         $("#antragsliste").find("> li").each(function () {
             var $li = $(this),
                 matchAll = true;
             if ($li.hasClass("adder-row")) return;
             if (initiator >= 0 && !$li.hasClass("stadtraetin_" + initiator)) matchAll = false;
-            if (thema >= 0 && !$li.hasClass("thema_" + thema)) matchAll = false;
+            if (thema >= 0 && !$li.hasClass("tag_" + thema)) matchAll = false;
             if (status >= 0 && !$li.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$li.hasClass("abgelaufen")) matchAll = false;
             if (typ >= 0 && !$li.hasClass("typ_" + typ)) matchAll = false;
@@ -178,6 +173,7 @@ jQuery(function () {
                 locale: 'de',
                 format: 'L'
             });
+            /*
             $newRow.find('.entertags').tagsinput({
                 typeaheadjs: {
                     name: 'tagnames',
@@ -186,6 +182,7 @@ jQuery(function () {
                     source: tagnames.ttAdapter()
                 }
             });
+             */
 
             $newRow.find(".aktionCol button").addClass("hidden");
             $newRow.find(".aktionCol .saved").removeClass("hidden");

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <div class="filter">
     <label class="hidden" for="filter_titel"></label>
     <input type="text" name="filter_titel" id="filter_titel" class="form-control filter_titel"
-           placeholder="Titel">
+           placeholder="Titel" autocomplete="off">
 </div>
 
 <div class="filter">
