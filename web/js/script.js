@@ -110,7 +110,10 @@ jQuery(function () {
         $adderRow.removeClass('hidden');
         $adderRow.find("input").first().focus();
     });
-    $('.adder-row .aktionCol button').click(function () {
+    $('.adder-row .aktionCol button').click(function (ev) {
+        ev.stopPropagation();
+        ev.preventDefault();
+
         var $adderRow = $('.adder-row'),
             data = {},
             params = {};

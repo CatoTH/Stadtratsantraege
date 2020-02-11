@@ -98,11 +98,12 @@ class SiteController extends Controller
         $antrag                     = new Antrag();
         $antrag->titel              = $data['titel'];
         $antrag->typ                = Antrag::$TYPEN[$data['typ']];
-        $antrag->bearbeitungsfrist  = (isset($data['bearbeitungsfrist']) ? $data['bearbeitungsfrist'] : null);
+        $antrag->bearbeitungsfrist  = (isset($data['bearbeitungsfrist']) && $data['bearbeitungsfrist'] ? $data['bearbeitungsfrist'] : '0000-00-00');
         $antrag->fristverlaengerung = (isset($data['fristverlaengerung']) ? $data['fristverlaengerung'] : null);
         $antrag->gestellt_am        = (isset($data['gestellt_am']) ? $data['gestellt_am'] : null);
         $antrag->status             = Antrag::$STATI[$data['status']];
         $antrag->notiz              = $data['notiz'];
+        $antrag->status_override    = '';
         $antrag->antrags_nr         = '';
         $antrag->save();
 
