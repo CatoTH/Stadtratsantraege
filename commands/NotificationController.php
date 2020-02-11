@@ -3,7 +3,7 @@
 namespace app\commands;
 
 use app\components\HtmlTools;
-use app\components\Mailgun;
+use app\components\Mailjet;
 use app\models\Antrag;
 use yii\console\Controller;
 
@@ -67,7 +67,7 @@ class NotificationController extends Controller
         $mail .= "\n\nMit freundlichen Grüßen,\n  Der nette grüne Stadtrats-Roboter";
 
         foreach (\Yii::$app->params['mailTo'] as $mailTo) {
-            Mailgun::sendWithLog($mailTo, 'Verspätungsalarm: Stadtrats-Anträge', $mail);
+            Mailjet::sendWithLog($mailTo, 'Verspätungsalarm: Stadtrats-Anträge', $mail);
         }
         echo $mail; // @TODO
 
