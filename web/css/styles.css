@@ -5,10 +5,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import "../fuelux-3.16.3/dist/css/fuelux.min.css";
-@import "../bootstrap-tagsinput/bootstrap-tagsinput.css";
-@import "../bootstrap-tagsinput/bootstrap-tagsinput-typeahead.css";
-@import "../js/bower/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css";
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;

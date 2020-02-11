@@ -20,6 +20,8 @@ $this->beginPage();
     <meta name="author" content="Tobias Hößl">
 
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/fuelux-3.16.3/dist/css/fuelux.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css">
 
     <script src="/js/jquery.min.js"></script>
     <script src="/js/jquery.viewport.js"></script>

@@ -4,4 +4,5 @@ cp node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepic
 cp node_modules/corejs-typeahead/dist/typeahead.bundle.min.js web/js
 cp node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js web/js
 
+cp node_modules/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css web/css
 cp -a node_modules/bootstrap-sass/assets/stylesheets web/css/bootstrap
