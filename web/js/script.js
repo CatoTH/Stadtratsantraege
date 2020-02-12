@@ -105,6 +105,22 @@ jQuery(function () {
     $(".filter_abgelaufen").on("changed.fu.checkbox", rebuildList);
     $("#filter_titel").on("keyup change", rebuildList);
 
+    $(document).on("change", ".tagsList .neu select", function() {
+        const $select = $(this);
+        const selected = $select.val();
+        if (selected !== "") {
+            const $newLi = $("<li class='tag'><span class='name'></span><a href='#' class='delete'>🗑</a></li>");
+            $newLi.find(".name").text(selected);
+            $newLi.data("tag", selected);
+            $newLi.insertBefore($select.parents(".neu"));
+            this.selectedIndex = 0;
+        }
+    });
+    $(document).on("click", ".tagsList .delete", function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        $(this).parents("li").first().remove();
+    });
 
     $('.eintrag_add_button').click(function () {
         $adderRow.removeClass('hidden');
@@ -119,7 +135,12 @@ jQuery(function () {
             params = {};
 
         data['titel'] = $adderRow.find("input[name=titel]").val();
-        data['tag'] = $adderRow.find(".tagsCol select").val();
+
+        data['tags'] = [];
+        $adderRow.find(".tagsList li.tag").each(function() {
+            data['tags'].push($(this).data("tag"));
+        });
+
         data['notiz'] = $adderRow.find("textarea[name=notiz]").val();
         data['typ'] = $adderRow.find("input[name=typ]").val();
         data['status'] = $adderRow.find("input[name=status]").val();
@@ -155,7 +176,11 @@ jQuery(function () {
             data = {},
             params = {};
 
-        data['tag'] = $row.find(".tagsCol select").val();
+        data['tags'] = [];
+        $row.find(".tagsList li.tag").each(function() {
+            data['tags'].push($(this).data("tag"));
+        });
+
         data['notiz'] = $row.find("textarea[name=notiz]").val();
         data['abgeschlossen'] = ($row.find("input[name=abgeschlossen]").prop("checked") ? 1 : 0);
 

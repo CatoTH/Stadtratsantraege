@@ -107,14 +107,16 @@ class SiteController extends Controller
         $antrag->antrags_nr         = '';
         $antrag->save();
 
-        if ($data['tag'] !== '') {
-            $tag = Tag::findOne(['name' => $data['tag']]);
-            if (!$tag) {
-                $tag       = new Tag();
-                $tag->name = $data['tag'];
-                $tag->save();
+        foreach ($data['tags'] as $tagName) {
+            if ($tagName !== '') {
+                $tag = Tag::findOne(['name' => $tagName]);
+                if (!$tag) {
+                    $tag       = new Tag();
+                    $tag->name = $tagName;
+                    $tag->save();
+                }
+                $antrag->link('tags', $tag);
             }
-            $antrag->link('tags', $tag);
         }
 
         if (isset($data['stadtraetinnen'])) {
@@ -161,14 +163,16 @@ class SiteController extends Controller
         foreach ($antrag->tags as $tag) {
             $antrag->unlink('tags', $tag, true);
         }
-        if ($_POST['antrag']['tag'] !== '') {
-            $tag = Tag::findOne(['name' => $_POST['antrag']['tag']]);
-            if (!$tag) {
-                $tag       = new Tag();
-                $tag->name = $_POST['antrag']['tag'];
-                $tag->save();
+        foreach ($_POST['antrag']['tags'] as $tagName) {
+            if ($tagName !== '') {
+                $tag = Tag::findOne(['name' => $tagName]);
+                if (!$tag) {
+                    $tag       = new Tag();
+                    $tag->name = $tagName;
+                    $tag->save();
+                }
+                $antrag->link('tags', $tag);
             }
-            $antrag->link('tags', $tag);
         }
 
         $row = $this->renderPartial('index_antrag_row', ['antrag' => $antrag]);

@@ -129,19 +129,29 @@ foreach ($antrag->dokumente as $dokument) {
             ?></textarea>
         </div>
         <div class="tagsCol col-md-3">
-            <label for="tag_<?= $antrag->id?>">Thema:</label><br>
-            <select size="1" autocomplete="off" title="Thema" class="" id="tag_<?= $antrag->id?>">
-                <option value=""></option>
+            <label>Themen:</label>
+            <ul class="tagsList">
                 <?php
-                foreach (Antrag::$THEMEN as $thema) {
-                    echo '<option value="' . Html::encode($thema) . '"';
-                    if (in_array($thema, $tags)) {
-                        echo ' selected="selected"';
-                    }
-                    echo '>' . Html::encode($thema) . '</option>';
+                foreach ($tags as $tag) {
+                    ?>
+                    <li class="tag" data-tag="<?= Html::encode($tag) ?>">
+                        <span class="name"><?= Html::encode($tag) ?></span>
+                        <a href="#" class="delete">🗑</a>
+                    </li>
+                <?php
                 }
                 ?>
-            </select>
+                <li class="neu">
+                    <select size="1" autocomplete="off" title="Thema">
+                        <option value="">+ Neu</option>
+                        <?php
+                        foreach (Antrag::$THEMEN as $thema) {
+                            echo '<option value="' . Html::encode($thema) . '">' . Html::encode($thema) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </li>
+            </ul>
         </div>
         <div class="aktionCol col-md-1">
             <br>

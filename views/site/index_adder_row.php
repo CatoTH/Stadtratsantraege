@@ -77,15 +77,19 @@ use yii\helpers\Url;
             <textarea placeholder="Notiz, aktueller Stand" name="notiz" class="form-control"></textarea>
         </div>
         <div class="tagsCol col-md-3">
-            <label for="adder_thema">Thema:</label><br>
-            <select size="1" autocomplete="off" title="Thema" class="" id="adder_thema">
-                <option value=""></option>
-                <?php
-                foreach (Antrag::$THEMEN as $thema) {
-                    echo '<option value="' . Html::encode($thema) . '">' . Html::encode($thema) . '</option>';
-                }
-                ?>
-            </select>
+            <label>Themen:</label>
+            <ul class="tagsList">
+                <li class="neu">
+                    <select size="1" autocomplete="off" title="Thema">
+                        <option value="">+ Neu</option>
+                        <?php
+                        foreach (Antrag::$THEMEN as $thema) {
+                            echo '<option value="' . Html::encode($thema) . '">' . Html::encode($thema) . '</option>';
+                        }
+                        ?>
+                    </select>
+                </li>
+            </ul>
         </div>
         <div class="aktionCol col-md-1">
             <br>
