@@ -29,6 +29,12 @@ if ($zeitraum_jahre == 10) {
 } else {
     echo Html::a('10 Jahre', Url::toRoute(['site/index', 'sort' => $sort, 'sort_desc' => $sort_desc, 'zeitraum_jahre' => 10, 'aenderungsantraege' => $aenderungsantraege]));
 }
+echo ' &nbsp; ';
+if ($zeitraum_jahre == 20) {
+    echo '<strong>20 Jahre</strong>';
+} else {
+    echo Html::a('20 Jahre', Url::toRoute(['site/index', 'sort' => $sort, 'sort_desc' => $sort_desc, 'zeitraum_jahre' => 20, 'aenderungsantraege' => $aenderungsantraege]));
+}
 echo '</div>';
 
 

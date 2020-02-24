@@ -6,19 +6,21 @@ use yii\helpers\Url;
 
 /** @var Antrag $antrag */
 
-$row_classes    = [];
-$stadtraetinnen = [];
-$tags           = [];
-$link           = 'https://www.muenchen-transparent.de/antraege/' . $antrag->ris_id;
+$row_classes         = [];
+$stadtraetinnen      = [];
+$tags                = [];
+$gemeinschaftsantrag = false;
+$link                = 'https://www.muenchen-transparent.de/antraege/' . $antrag->ris_id;
 foreach ($antrag->initiatorinnen as $stadtraetin) {
     $row_classes[] = 'stadtraetin_' . $stadtraetin->id;
     if ($stadtraetin->fraktionsmitglied) {
         $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));
         $stadtraetinnen[] = Html::encode($namen[0]);
     } else {
-        $parts = explode(",", $stadtraetin->name);
-        $name = (count($parts) === 2 ? $parts[1] . ' ' . $parts[0] : $stadtraetin->name);
-        $stadtraetinnen[] = '<span class="nicht-fraktion">' . Html::encode($name) . '</span>';
+        $parts               = explode(",", $stadtraetin->name);
+        $name                = (count($parts) === 2 ? $parts[1] . ' ' . $parts[0] : $stadtraetin->name);
+        $stadtraetinnen[]    = '<span class="nicht-fraktion">' . Html::encode($name) . '</span>';
+        $gemeinschaftsantrag = true;
     }
 }
 usort($stadtraetinnen, function ($name1, $name2) {
@@ -34,6 +36,9 @@ if ($antrag->istAbgelaufen()) {
 }
 if ($antrag->fristverlaengerung) {
     $row_classes[] = 'verlaengert';
+}
+if ($gemeinschaftsantrag) {
+    $row_classes[] = 'gemeinschaftsantrag';
 }
 $row_classes[] = 'status_' . $antrag->getStatusId();
 
@@ -138,7 +143,7 @@ foreach ($antrag->dokumente as $dokument) {
                         <span class="name"><?= Html::encode($tag) ?></span>
                         <a href="#" class="delete">🗑</a>
                     </li>
-                <?php
+                    <?php
                 }
                 ?>
                 <li class="neu">

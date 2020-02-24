@@ -21,7 +21,9 @@ use yii\helpers\Html;
             foreach (\app\models\Antrag::$TYPEN as $typ_id => $typ_name) {
                 echo '<li data-value="' . Html::encode($typ_id) . '"><a href="#">' .
                      Html::encode($typ_name) . '</a></li>';
-            } ?>
+            }
+            ?>
+            <li data-value="-2"><a href="#">Gemeinschaftsanträge</a></li>
         </ul>
         <input class="hidden hidden-field" name="filter_typ" readonly="readonly" aria-hidden="true"
                type="text"/>

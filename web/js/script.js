@@ -87,6 +87,7 @@ jQuery(function () {
             if (status >= 0 && !$li.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$li.hasClass("abgelaufen")) matchAll = false;
             if (typ >= 0 && !$li.hasClass("typ_" + typ)) matchAll = false;
+            if (typ == -2 && !$li.hasClass("gemeinschaftsantrag")) matchAll = false;
             if (titel !== '' && $li.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) === -1) matchAll = false;
 
             if (matchAll) {
