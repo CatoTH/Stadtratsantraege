@@ -20,7 +20,9 @@ foreach ($antrag->initiatorinnen as $stadtraetin) {
         $parts               = explode(",", $stadtraetin->name);
         $name                = (count($parts) === 2 ? $parts[1] . ' ' . $parts[0] : $stadtraetin->name);
         $stadtraetinnen[]    = '<span class="nicht-fraktion">' . Html::encode($name) . '</span>';
-        $gemeinschaftsantrag = true;
+        if ($stadtraetin->id > 0) {
+            $gemeinschaftsantrag = true;
+        }
     }
 }
 usort($stadtraetinnen, function ($name1, $name2) {
