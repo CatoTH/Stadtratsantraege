@@ -163,15 +163,17 @@ class SiteController extends Controller
         foreach ($antrag->tags as $tag) {
             $antrag->unlink('tags', $tag, true);
         }
-        foreach ($_POST['antrag']['tags'] as $tagName) {
-            if ($tagName !== '') {
-                $tag = Tag::findOne(['name' => $tagName]);
-                if (!$tag) {
-                    $tag       = new Tag();
-                    $tag->name = $tagName;
-                    $tag->save();
+        if (isset($_POST['antrag']['tags'])) {
+            foreach ($_POST['antrag']['tags'] as $tagName) {
+                if ($tagName !== '') {
+                    $tag = Tag::findOne(['name' => $tagName]);
+                    if (!$tag) {
+                        $tag       = new Tag();
+                        $tag->name = $tagName;
+                        $tag->save();
+                    }
+                    $antrag->link('tags', $tag);
                 }
-                $antrag->link('tags', $tag);
             }
         }
 
