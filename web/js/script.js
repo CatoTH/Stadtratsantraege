@@ -71,7 +71,7 @@ jQuery(function () {
     var rebuildList = function () {
         var initiator = $("input[name=filter_initiator]").val(),
             status = $("input[name=filter_status]").val(),
-            typ = $("input[name=filter_typ]").val(),
+            typ = parseInt($("input[name=filter_typ]").val()),
             thema = $("input[name=filter_thema]").val(),
             abgelaufen = $("input[name=filter_abgelaufen]").prop("checked"),
             titel = $("#filter_titel").val();
@@ -87,7 +87,8 @@ jQuery(function () {
             if (status >= 0 && !$li.hasClass("status_" + status)) matchAll = false;
             if (abgelaufen && !$li.hasClass("abgelaufen")) matchAll = false;
             if (typ >= 0 && !$li.hasClass("typ_" + typ)) matchAll = false;
-            if (typ == -2 && !$li.hasClass("gemeinschaftsantrag")) matchAll = false;
+            if (typ === -2 && !$li.hasClass("gemeinschaftsantrag")) matchAll = false;
+            if (typ === -3 && !$li.hasClass("koalitionsantrag")) matchAll = false;
             if (titel !== '' && $li.find("a").text().toLowerCase().indexOf(titel.toLowerCase()) === -1) matchAll = false;
 
             if (matchAll) {

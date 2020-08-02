@@ -10,17 +10,20 @@ $row_classes         = [];
 $stadtraetinnen      = [];
 $tags                = [];
 $gemeinschaftsantrag = false;
+$koalitionsantrag    = false;
 $link                = 'https://www.muenchen-transparent.de/antraege/' . $antrag->ris_id;
 foreach ($antrag->initiatorinnen as $stadtraetin) {
     $row_classes[] = 'stadtraetin_' . $stadtraetin->id;
-    if ($stadtraetin->fraktionsmitglied) {
+    if ($stadtraetin->istFraktionsmitglied()) {
         $namen            = explode(' ', str_replace('Dr. ', '', $stadtraetin->name));
         $stadtraetinnen[] = Html::encode($namen[0]);
     } else {
         $parts               = explode(",", $stadtraetin->name);
         $name                = (count($parts) === 2 ? $parts[1] . ' ' . $parts[0] : $stadtraetin->name);
         $stadtraetinnen[]    = '<span class="nicht-fraktion">' . Html::encode($name) . '</span>';
-        if ($stadtraetin->id > 0) {
+        if ($stadtraetin->istKoalitionspartnerin()) {
+            $koalitionsantrag = true;
+        } elseif ($stadtraetin->id > 0) {
             $gemeinschaftsantrag = true;
         }
     }
@@ -41,6 +44,9 @@ if ($antrag->fristverlaengerung) {
 }
 if ($gemeinschaftsantrag) {
     $row_classes[] = 'gemeinschaftsantrag';
+}
+if ($koalitionsantrag) {
+    $row_classes[] = 'koalitionsantrag';
 }
 $row_classes[] = 'status_' . $antrag->getStatusId();
 

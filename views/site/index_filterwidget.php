@@ -23,6 +23,7 @@ use yii\helpers\Html;
                      Html::encode($typ_name) . '</a></li>';
             }
             ?>
+            <li data-value="-3"><a href="#">Koalitionsanträge</a></li>
             <li data-value="-2"><a href="#">Gemeinschaftsanträge</a></li>
         </ul>
         <input class="hidden hidden-field" name="filter_typ" readonly="readonly" aria-hidden="true"

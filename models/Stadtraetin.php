@@ -53,4 +53,14 @@ class Stadtraetin extends ActiveRecord
 
         return static::$fraktionsmitglieder;
     }
+
+    public function istFraktionsmitglied()
+    {
+        return intval($this->fraktionsmitglied) === 1;
+    }
+
+    public function istKoalitionspartnerin()
+    {
+        return intval($this->fraktionsmitglied) === 2;
+    }
 }
