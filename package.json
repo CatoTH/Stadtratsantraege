@@ -11,7 +11,7 @@
         "corejs-typeahead": "^1.3.0",
         "eonasdan-bootstrap-datetimepicker": "^4.17.47",
         "jquery": "^3.4.1",
-        "moment": "^2.24.0",
+        "moment": "^2.29.4",
         "sortablejs": "^1.10.2"
     },
     "directories": {
